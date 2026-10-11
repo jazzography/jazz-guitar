@@ -78,7 +78,6 @@
     .idx-sec-title:first-child { margin-top: 4px; }
     .idx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .idx-btn { background: #1e1b4b; border: 1px solid #4338ca; color: #e0e7ff; padding: 8px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .idx-btn:hover { background: #3730a3; }
     .idx-btn span { color: #facc15; font-size: 11px; margin-right: 4px; font-weight: 800; }
     .direct-box { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #282d37; align-items: center; }
     .direct-input { background: #0f1115; border: 1px solid #38bdf8; color: #fff; padding: 8px; border-radius: 6px; width: 100px; font-weight: bold; font-size: 14px; text-align: center; }
@@ -142,7 +141,7 @@
         <button onclick="moveDay(1)" id="btnNext">▶</button>
       </div>
     </div>
-    <div class="badge" id="dayBadge">로딩 중...</div>
+    <div class="badge" id="dayBadge">오늘의 Key: C | Year 1 (4분음표)</div>
 
     <div id="routineList"></div>
 
@@ -278,7 +277,6 @@
     var JOIN_URL = "https://www.youtube.com/channel/UCI8PtsibK2wGkrvaKUdW0kg/join";
 
     var keys = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "B", "E", "A", "D", "G"];
-    var fallbackRhythms = ["4분음표", "8분음표", "3잇단음표", "16분음표", "6잇단음표", "32분음표/변형"];
     var fallbackPatterns = [
       "2도 패턴 (스텝 와이즈)", "3도 인터벌 (한 음 건너)", "4도 인터벌 (두 음 건너)",
       "5도 인터벌 (세 음 건너)", "6도 인터벌 (네 음 건너)", "7도 인터벌 (다섯 음 건너)",
@@ -331,6 +329,31 @@
       return 361 + ((tuneIndex - 12) * 14);
     }
 
+    // 신규 리듬 일별 로테이션 규칙 함수
+    function getTodayRhythm(d) {
+      var isEn = (currentLang === 'en');
+      var r4 = isEn ? "Quarter Notes" : "4분음표";
+      var r8 = isEn ? "8th Notes" : "8분음표";
+      var r16 = isEn ? "16th Notes" : "16분음표";
+      var r3trip = isEn ? "Triplets" : "3잇단음표";
+      var r6trip = isEn ? "Sextuplets" : "6잇단음표";
+      var r32 = isEn ? "32nd / Syncopated" : "32분음표/변형";
+
+      // 1~2주차: 3개 리듬 순환 (1일 4분, 2일 8분, 3일 16분...)
+      if (d <= 14) {
+        var pool1 = [r4, r8, r16];
+        return pool1[(d - 1) % pool1.length];
+      }
+      // 3~4주차: 5개 리듬 순환 (3잇단, 6잇단 추가)
+      if (d <= 28) {
+        var pool2 = [r4, r8, r16, r3trip, r6trip];
+        return pool2[(d - 1) % pool2.length];
+      }
+      // 5주차부터 학습 종료일까지: 6개 전체 리듬 순환
+      var pool3 = [r4, r8, r16, r3trip, r6trip, r32];
+      return pool3[(d - 1) % pool3.length];
+    }
+
     var i18n = {
       ko: {
         bannerLive: "● LIVE",
@@ -370,7 +393,6 @@
         posCAGED: "CAGED Pos ",
         pos3NPS: "7포지션(3NPS) Pos ",
         patternLabel: "패턴",
-        rhythms: ["4분음표", "8분음표", "3잇단음표", "16분음표", "6잇단음표", "32분음표/변형"],
         patterns: fallbackPatterns,
         scales: {
           "메이저 펜타토닉": "메이저 펜타토닉",
@@ -459,13 +481,7 @@
         posCAGED: "CAGED Pos ",
         pos3NPS: "7-Position(3NPS) Pos ",
         patternLabel: "Pattern",
-        rhythms: ["Quarter Notes", "8th Notes", "Triplets", "16th Notes", "Sextuplets", "32nd / Syncopated"],
-        patterns: [
-          "Step-wise (2nd Interval)", "3rd Interval (Every other note)", "4th Interval",
-          "5th Interval", "6th Interval", "7th Interval",
-          "Octave Leap", "Diatonic Triads (1-3-5)", "Diatonic 7th Chords (1-3-5-7)",
-          "Triplet Grouping Pattern", "4-Note Grouping Pattern"
-        ],
+        patterns: fallbackPatterns,
         scales: {
           "메이저 펜타토닉": "Major Pentatonic",
           "마이너 펜타토닉": "Minor Pentatonic",
@@ -778,8 +794,8 @@
       var activeIdx = (d - Math.floor(d / 7) - 1);
       var currentKey = keys[activeIdx % 12];
       
-      var rhythms = (t.rhythms && t.rhythms.length > 0) ? t.rhythms : fallbackRhythms;
-      var rhythm = rhythms[Math.floor(d / 60) % rhythms.length] || "4분음표";
+      // 일별 자동 전환 리듬 가져오기
+      var rhythm = getTodayRhythm(d);
       
       var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
       var posTxt = yr === 1 ? ((t.posCAGED || "CAGED Pos ") + (((d - 1) % 5) + 1)) : ((t.pos3NPS || "Pos ") + (((d - 1) % 7) + 1));
@@ -788,7 +804,6 @@
       var patterns = (t.patterns && t.patterns.length > 0) ? t.patterns : fallbackPatterns;
       var todayPattern = patterns[(d - 1) % patterns.length] || patterns[0];
 
-      // 안전한 뱃지 텍스트 조립
       var keyTitle = (currentLang === 'en') ? "Today's Key" : "오늘의 Key";
       var yearTitle = "Year";
       badgeElem.innerText = keyTitle + ': ' + currentKey + ' | ' + yearTitle + ' ' + yr + ' (' + rhythm + ')';
@@ -812,7 +827,7 @@
 
       var scaleItemHtml = '';
       if (d <= 90) {
-        scaleItemHtml = currentKey + ' ' + todayScale + ' [' + posTxt + '] (20m)';
+        scaleItemHtml = currentKey + ' ' + todayScale + ' [' + posTxt + '] (20m)<br><span style="color:#f59e0b; font-size:13px; font-weight:600; display:inline-block; margin-top:3px;">└ 리듬 타겟: ' + rhythm + '</span>';
       } else {
         scaleItemHtml = currentKey + ' ' + todayScale + ' [' + posTxt + '] (20m)<br><span style="color:#f59e0b; font-size:13px; font-weight:600; display:inline-block; margin-top:3px;">└ ' + (t.patternLabel || "패턴") + ': ' + todayPattern + ' (' + rhythm + ')</span>';
       }
