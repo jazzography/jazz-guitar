@@ -106,7 +106,7 @@
     }
     .promo-box p { font-size: 13.5px; color: #fed7aa; line-height: 1.55; margin-bottom: 10px; }
     .promo-fee-tip {
-      font-size: 11.5px; color: #fdba74; line-line: 1.4; margin-top: 8px;
+      font-size: 11.5px; color: #fdba74; line-height: 1.4; margin-top: 8px;
       padding-top: 8px; border-top: 1px dashed rgba(234, 88, 12, 0.4);
     }
 
@@ -139,17 +139,13 @@
     }
     .play-btn.on { background: #ef4444; color: #fff; }
 
-    /* 모달 베이스 */
+    /* 모달 */
     .modal {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
       z-index: 200; align-items: center; justify-content: center; padding: 20px;
     }
-    .modal-box {
-      background: #1a1e26; border: 1px solid #f59e0b; border-radius: 14px;
-      padding: 22px; max-width: 360px; text-align: center; width: 100%;
-    }
 
-    /* 주제별 숏컷 모달 */
+    /* 인덱스 숏컷 모달 */
     .index-modal-box {
       background: #14171f; border: 1px solid #9333ea; border-radius: 14px;
       padding: 20px; max-width: 460px; width: 100%; max-height: 85vh;
@@ -190,6 +186,10 @@
     .grass-cell.done { background: #22c55e; }
     .grass-cell.current { border: 1px solid #facc15; }
 
+    .modal-box {
+      background: #1a1e26; border: 1px solid #f59e0b; border-radius: 14px;
+      padding: 22px; max-width: 360px; text-align: center; width: 100%;
+    }
     .master-modal-box {
       background: #161820; border: 2px solid #eab308; border-radius: 16px;
       padding: 24px 20px; max-width: 380px; text-align: center; box-shadow: 0 10px 30px rgba(234, 179, 8, 0.25);
@@ -280,7 +280,7 @@
     </div>
   </div>
 
-  <!-- 주제별 점프 인덱스 모달 (Shortcut / Curriculum Finder) -->
+  <!-- 주제별 점프 인덱스 모달 -->
   <div class="modal" id="indexModal">
     <div class="index-modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -289,7 +289,6 @@
       </div>
       
       <div class="index-content">
-        <!-- 스케일 점프 -->
         <div class="idx-sec-title" id="idxSecScale">🎯 핵심 스케일 & 모드 (도입 시점)</div>
         <div class="idx-grid">
           <button class="idx-btn" onclick="jumpToDay(1)"><span>D-1</span> 메이저 펜타토닉</button>
@@ -304,7 +303,6 @@
           <button class="idx-btn" onclick="jumpToDay(731)"><span>D-731</span> 하모닉 메이저</button>
         </div>
 
-        <!-- 화성 & 랭귀지 커리큘럼 점프 -->
         <div class="idx-sec-title" id="idxSecHarm">🎼 화성 & 재즈 랭귀지 마일스톤</div>
         <div class="idx-grid">
           <button class="idx-btn" onclick="jumpToDay(1)"><span>D-1</span> 3화음 & 135 아르페지오</button>
@@ -314,16 +312,13 @@
           <button class="idx-btn" onclick="jumpToDay(731)"><span>D-731</span> 얼터드·트리톤 마스터 셀</button>
         </div>
 
-        <!-- 스탠다드 곡 선택 점프 -->
         <div class="idx-sec-title" id="idxSecTune">🎷 스탠다드 64곡 코드 멜로디 바로가기</div>
         <div style="font-size:12px; color:#94a3b8; margin-bottom:6px;" id="idxSecTuneDesc">연습하고 싶은 곡을 선택하면 해당 루틴 날짜로 이동합니다:</div>
         <div style="margin-bottom:12px;">
           <select id="tuneJumpSelect" onchange="jumpToSelectedTune(this.value)" style="width:100%; background:#0f1115; border:1px solid #7c3aed; color:#fde047; padding:9px 10px; border-radius:6px; font-size:13.5px; font-weight:bold;">
-            <!-- JS 동적 생성 -->
           </select>
         </div>
 
-        <!-- 일차 직접 입력 이동 -->
         <div class="direct-box">
           <span style="font-size:13px; color:#cbd5e1;" id="directJumpLabel">원하는 Day 직접 입력:</span>
           <input type="number" id="directDayInput" class="direct-input" min="1" max="1095" placeholder="1~1095">
@@ -398,20 +393,35 @@
 
     var memoryStore = {};
     function safeSave(k, v) {
-      try { localStorage.setItem(k, v); } catch(e) {}
-      memoryStore[k] = v;
+      try { 
+        if (v === undefined || v === 'undefined') v = '';
+        localStorage.setItem(k, String(v)); 
+      } catch(e) {}
+      memoryStore[k] = String(v);
     }
     function safeGet(k, def) {
       try {
         var v = localStorage.getItem(k);
-        if (v !== null) return v;
+        if (v !== null && v !== 'undefined' && v !== '') return v;
       } catch(e) {}
-      return memoryStore[k] !== undefined ? memoryStore[k] : def;
+      var mem = memoryStore[k];
+      return (mem !== undefined && mem !== 'undefined' && mem !== '') ? mem : def;
     }
 
     var currentLang = safeGet('jazz_lang', 'ko');
-    var currentDay = parseInt(safeGet('jazz_day', '1'), 10) || 1;
+    if (currentLang !== 'ko' && currentLang !== 'en') currentLang = 'ko';
+
+    var rawDay = parseInt(safeGet('jazz_day', '1'), 10);
+    var currentDay = (!isNaN(rawDay) && rawDay >= 1 && rawDay <= 1095) ? rawDay : 1;
+
     var keys = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "B", "E", "A", "D", "G"];
+    var fallbackRhythms = ["4분음표", "8분음표", "3잇단음표", "16분음표", "6잇단음표", "32분음표/변형"];
+    var fallbackPatterns = [
+      "2도 패턴 (스텝 와이즈)", "3도 인터벌 (한 음 건너)", "4도 인터벌 (두 음 건너)",
+      "5도 인터벌 (세 음 건너)", "6도 인터벌 (네 음 건너)", "7도 인터벌 (다섯 음 건너)",
+      "옥타브 인터벌 도약", "다이아토닉 3화음(Triad)", "다이아토닉 7th 코드",
+      "3연음 그룹핑 패턴", "4연음 그룹핑 패턴"
+    ];
 
     var standardTunes = [
       "Autumn Leaves", "Blue Bossa", "Fly Me to the Moon", "All of Me",
@@ -433,12 +443,11 @@
       "Spain", "Anthropology"
     ];
 
-    // 스탠다드 각 곡의 시작 일차(Day) 계산 테이블
     function getTuneStartDay(tuneIndex) {
       if (tuneIndex < 12) {
-        return (tuneIndex * 30) + 1; // 1년 차: 월 1곡
+        return (tuneIndex * 30) + 1;
       } else {
-        return 361 + ((tuneIndex - 12) * 14); // 2~3년 차: 2주 1곡
+        return 361 + ((tuneIndex - 12) * 14);
       }
     }
 
@@ -643,7 +652,7 @@
         var weekNum = Math.floor(afterDay / 7) + 1;
         periodLabel = isEn ? ("Week " + weekNum + " (2-Wk Mastery)") : ("Week " + weekNum + " (2주 완성)");
       }
-      return { name: standardTunes[tuneIdx], label: periodLabel };
+      return { name: standardTunes[tuneIdx] || "Autumn Leaves", label: periodLabel };
     }
 
     function getScaleKey(d) {
@@ -675,13 +684,15 @@
 
     function getScaleName(d) {
       var k = getScaleKey(d);
+      if (!i18n || !i18n[currentLang] || !i18n[currentLang].scales) return k;
       return i18n[currentLang].scales[k] || k;
     }
 
     function getCompletedMap() {
       try {
         var raw = safeGet('jazz_completed_map', '{}');
-        return JSON.parse(raw);
+        var parsed = JSON.parse(raw);
+        return (parsed && typeof parsed === 'object') ? parsed : {};
       } catch(e) {
         return {};
       }
@@ -695,7 +706,6 @@
       render(currentDay);
     }
 
-    /* 주제별 인덱스 모달 제어 */
     function openIndexModal() {
       populateTuneSelect();
       document.getElementById('indexModal').style.display = 'flex';
@@ -734,14 +744,14 @@
       var html = '<option value="">' + (currentLang === 'en' ? '▼ Select a Standard Tune...' : '▼ 스탠다드 곡 선택 바로가기...') + '</option>';
       for (var i = 0; i < standardTunes.length; i++) {
         var startDay = getTuneStartDay(i);
-        var isCurrent = (standardTunes[i] === curTuneInfo.name) ? ' (현재 학습 중)' : '';
+        var isCurrent = (standardTunes[i] === curTuneInfo.name) ? (currentLang === 'en' ? ' (Current)' : ' (현재 학습 중)') : '';
         html += '<option value="' + startDay + '">#' + (i + 1) + ' ' + standardTunes[i] + ' [Day ' + startDay + ']' + isCurrent + '</option>';
       }
       select.innerHTML = html;
     }
 
     function updateStaticUI() {
-      var t = i18n[currentLang];
+      var t = i18n[currentLang] || i18n.ko;
       document.getElementById('indexBtnTxt').innerText = t.indexBtn;
       document.getElementById('langToggleBtn').innerText = (currentLang === 'ko') ? '🌐 EN' : '🌐 한국어';
       document.getElementById('bannerTitle').innerHTML = '<span>' + t.bannerLive + '</span> ' + t.bannerTitle;
@@ -763,7 +773,6 @@
       document.getElementById('praiseTitle').innerText = t.praiseTitle;
       document.getElementById('praiseConfirm').innerText = t.praiseConfirm;
 
-      // 숏컷 모달 번역
       document.getElementById('idxModalHead').innerText = t.idxModalHead;
       document.getElementById('idxSecScale').innerText = t.idxSecScale;
       document.getElementById('idxSecHarm').innerText = t.idxSecHarm;
@@ -774,7 +783,7 @@
     }
 
     function updateProgressUI() {
-      var t = i18n[currentLang];
+      var t = i18n[currentLang] || i18n.ko;
       var map = getCompletedMap();
       var doneCount = Object.keys(map).length;
       document.getElementById('totalDoneDays').innerText = doneCount;
@@ -800,7 +809,7 @@
     }
 
     function toggleComplete() {
-      var t = i18n[currentLang];
+      var t = i18n[currentLang] || i18n.ko;
       var map = getCompletedMap();
       if (map[currentDay]) {
         delete map[currentDay];
@@ -813,7 +822,7 @@
         if (currentDay >= 1095) {
           document.getElementById('masterModal').style.display = 'flex';
         } else {
-          var quotesList = t.quotes;
+          var quotesList = t.quotes || i18n.ko.quotes;
           document.getElementById('praiseQuote').innerText = '"' + quotesList[Math.floor(Math.random() * quotesList.length)] + '"';
           document.getElementById('praiseModal').style.display = 'flex';
         }
@@ -860,7 +869,7 @@
     }
 
     function render(d) {
-      var t = i18n[currentLang];
+      var t = i18n[currentLang] || i18n.ko;
       var dayTitleElem = document.getElementById('dayTitle');
       var container = document.getElementById('routineList');
       var badgeElem = document.getElementById('dayBadge');
@@ -869,10 +878,10 @@
       dayTitleElem.innerText = 'DAY ' + d + ' / 1095';
       container.innerHTML = '';
 
-      document.getElementById('memoBox').value = safeGet('jazz_memo_' + d, '');
+      var savedMemo = safeGet('jazz_memo_' + d, '');
+      document.getElementById('memoBox').value = (savedMemo === 'undefined') ? '' : savedMemo;
       document.getElementById('memoChk').checked = safeGet('jazz_memo_chk_' + d, '0') === '1';
 
-      // 7일차 주간 자율 세션
       if (d % 7 === 0) {
         badgeElem.innerText = '☕ WEEK ' + Math.ceil(d/7) + ' : ' + t.freeJamTitle;
         container.innerHTML = 
@@ -893,11 +902,18 @@
 
       var activeIdx = (d - Math.floor(d / 7) - 1);
       var currentKey = keys[activeIdx % 12];
-      var rhythm = t.rhythms[Math.floor(d / 60) % t.rhythms.length];
+      
+      // 리듬 연산 방어 (undefined 원천 차단)
+      var rhythms = (t && t.rhythms && t.rhythms.length > 0) ? t.rhythms : fallbackRhythms;
+      var rhythm = rhythms[Math.floor(d / 60) % rhythms.length] || "4분음표";
+      
       var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
       var posTxt = yr === 1 ? (t.posCAGED + (((d - 1) % 5) + 1)) : (t.pos3NPS + (((d - 1) % 7) + 1));
       var todayScale = getScaleName(d);
-      var todayPattern = t.patterns[(d - 1) % t.patterns.length];
+      
+      // 패턴 연산 방어
+      var patterns = (t && t.patterns && t.patterns.length > 0) ? t.patterns : fallbackPatterns;
+      var todayPattern = patterns[(d - 1) % patterns.length] || patterns[0];
 
       badgeElem.innerText = t.badgeKey + ': ' + currentKey + ' | ' + t.badgeYear + ' ' + yr + ' (' + rhythm + ')';
 
@@ -1053,6 +1069,7 @@
       }
     }
 
+    // 초기 구동
     updateStaticUI();
     populateTuneSelect();
     render(currentDay);
