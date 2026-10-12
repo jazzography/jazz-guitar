@@ -9,7 +9,7 @@
   
   <title>1095 Jazz Guitar</title>
   
-  <!-- 카카오톡/SNS 텍스트 전용 심플 미리보기 메타 태그 (이미지 완전 제거) -->
+  <!-- 카카오톡/SNS 텍스트 전용 심플 미리보기 메타 태그 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="1095 Jazz Guitar - 3년 완주 재즈기타 루틴">
   <meta property="og:description" content="매일 3시간, 12키와 스케일·보이스리딩·코드멜로디 자동 배정 데일리 연습 엔진">
@@ -21,7 +21,14 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      -webkit-tap-highlight-color: transparent; 
+      touch-action: manipulation; /* 더블 탭 확대 방지 핵심 속성 */
+    }
     body { background: #0f1115; color: #f0f2f5; padding-bottom: 140px; font-size: 15px; }
     
     .yt-banner-wrapper { position: sticky; top: 0; z-index: 100; background: #1a1010; border-bottom: 1px solid #4a1d1d; }
@@ -43,7 +50,19 @@
     .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .nav-bar h2 { font-size: 21px; font-weight: 900; }
     .nav-controls { display: flex; align-items: center; gap: 5px; }
-    .nav-bar button { background: #21262d; border: 1px solid #30363d; color: #fff; padding: 7px 11px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; }
+    .nav-bar button { 
+      background: #21262d; 
+      border: 1px solid #30363d; 
+      color: #fff; 
+      padding: 7px 11px; 
+      border-radius: 8px; 
+      font-size: 13px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation; /* 화살표 버튼 더블 탭 확대 원천 차단 */
+    }
     .index-btn { background: #2e1065; border: 1px solid #9333ea; color: #e9d5ff; padding: 7px 10px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
     .lang-btn { background: #1e293b; border: 1px solid #0284c7; color: #38bdf8; padding: 7px 9px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
 
@@ -66,7 +85,7 @@
 
     .memo-txt { width: 100%; background: #101216; border: 1px solid #282d37; color: #fff; border-radius: 8px; padding: 10px; font-size: 14px; line-height: 1.5; margin-top: 8px; }
 
-    .done-btn { width: 100%; background: #22c55e; color: #000; border: none; font-weight: 800; font-size: 16px; padding: 16px; border-radius: 10px; margin-top: 14px; cursor: pointer; }
+    .done-btn { width: 100%; background: #22c55e; color: #000; border: none; font-weight: 800; font-size: 16px; padding: 16px; border-radius: 10px; margin-top: 14px; cursor: pointer; user-select: none; -webkit-user-select: none; }
     .done-btn.completed { background: #15803d; color: #dcfce7; }
 
     /* 커피 후원 박스 */
@@ -89,9 +108,9 @@
     .metro-dock { position: fixed; bottom: 0; left: 0; right: 0; background: #14171f; border-top: 1px solid #282d37; padding: 12px 16px; z-index: 99; display: flex; justify-content: center; }
     .metro-inner { width: 100%; max-width: 540px; display: flex; align-items: center; justify-content: space-between; }
     .ctrl-btns { display: flex; align-items: center; gap: 8px; }
-    .ctrl-btns button { background: #21262d; border: 1px solid #30363d; color: #fff; width: 40px; height: 40px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
+    .ctrl-btns button { background: #21262d; border: 1px solid #30363d; color: #fff; width: 40px; height: 40px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; user-select: none; -webkit-user-select: none; }
     .bpm-num { font-size: 20px; font-weight: 900; min-width: 70px; text-align: center; }
-    .play-btn { background: #f59e0b; color: #000; border: none; font-weight: 800; padding: 0 20px; height: 40px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    .play-btn { background: #f59e0b; color: #000; border: none; font-weight: 800; padding: 0 20px; height: 40px; border-radius: 8px; font-size: 15px; cursor: pointer; user-select: none; -webkit-user-select: none; }
     .play-btn.on { background: #ef4444; color: #fff; }
 
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
@@ -102,7 +121,8 @@
     .idx-sec-title { font-size: 13.5px; font-weight: 800; color: #c084fc; margin: 14px 0 8px; }
     .idx-sec-title:first-child { margin-top: 4px; }
     .idx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-    .idx-btn { background: #1e1b4b; border: 1px solid #4338ca; color: #e0e7ff; padding: 8px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .idx-btn { background: #1e1b4b; border: 1px solid #4338ca; color: #e0e7ff; padding: 8px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; user-select: none; -webkit-user-select: none; }
+    .idx-btn:hover { background: #3730a3; }
     .idx-btn span { color: #facc15; font-size: 11px; margin-right: 4px; font-weight: 800; }
     .direct-box { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #282d37; align-items: center; }
     .direct-input { background: #0f1115; border: 1px solid #38bdf8; color: #fff; padding: 8px; border-radius: 6px; width: 100px; font-weight: bold; font-size: 14px; text-align: center; }
@@ -990,6 +1010,15 @@
         clearTimeout(timerId);
       }
     }
+
+    // 모바일 더블 탭 확대 방어 이벤트 리스너 등록
+    document.addEventListener('touchend', function (event) {
+      var now = (new Date()).getTime();
+      if (now - (window.lastTouchEnd || 0) <= 300) {
+        event.preventDefault();
+      }
+      window.lastTouchEnd = now;
+    }, false);
 
     updateStaticUI();
     populateTuneSelect();
