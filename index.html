@@ -8,13 +8,21 @@
   <meta http-equiv="Expires" content="0">
   
   <title>1095 Jazz Guitar</title>
+  
+  <!-- 카카오톡/SNS 텍스트 전용 심플 미리보기 메타 태그 (이미지 완전 제거) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="1095 Jazz Guitar - 3년 완주 재즈기타 루틴">
+  <meta property="og:description" content="매일 3시간, 12키와 스케일·보이스리딩·코드멜로디 자동 배정 데일리 연습 엔진">
+  <meta property="og:url" content="https://jazzography.github.io/jazz-guitar/">
+  <meta name="twitter:card" content="summary">
+  
   <meta name="apple-mobile-web-app-title" content="1095 Jazz Guitar">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #0f1115; color: #f0f2f5; padding-bottom: 130px; font-size: 15px; }
+    body { background: #0f1115; color: #f0f2f5; padding-bottom: 140px; font-size: 15px; }
     
     .yt-banner-wrapper { position: sticky; top: 0; z-index: 100; background: #1a1010; border-bottom: 1px solid #4a1d1d; }
     .yt-banner { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -61,6 +69,23 @@
     .done-btn { width: 100%; background: #22c55e; color: #000; border: none; font-weight: 800; font-size: 16px; padding: 16px; border-radius: 10px; margin-top: 14px; cursor: pointer; }
     .done-btn.completed { background: #15803d; color: #dcfce7; }
 
+    /* 커피 후원 박스 */
+    .donate-card {
+      background: #14171f; border: 1px solid #2d3340; border-radius: 12px;
+      padding: 16px; margin-top: 16px; text-align: center;
+    }
+    .donate-title { font-size: 13.5px; font-weight: 800; color: #facc15; margin-bottom: 4px; }
+    .donate-sub { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
+    .donate-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .donate-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 8px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 800;
+      transition: opacity 0.2s;
+    }
+    .donate-btn:hover { opacity: 0.85; }
+    .donate-btn-kakao { background: #fee500; color: #191919; }
+    .donate-btn-kofi { background: #ff5e5b; color: #ffffff; }
+
     .metro-dock { position: fixed; bottom: 0; left: 0; right: 0; background: #14171f; border-top: 1px solid #282d37; padding: 12px 16px; z-index: 99; display: flex; justify-content: center; }
     .metro-inner { width: 100%; max-width: 540px; display: flex; align-items: center; justify-content: space-between; }
     .ctrl-btns { display: flex; align-items: center; gap: 8px; }
@@ -95,7 +120,6 @@
     .grass-cell.current { border: 1px solid #facc15; }
 
     .master-modal-box { background: #161820; border: 2px solid #eab308; border-radius: 16px; padding: 24px 20px; max-width: 380px; text-align: center; }
-    .master-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid #facc15; margin: 0 auto 14px; display: block; }
     .master-title { font-size: 20px; font-weight: 900; color: #facc15; margin-bottom: 8px; }
     .master-text { font-size: 14px; line-height: 1.65; color: #f1f5f9; text-align: left; margin: 14px 0; }
   </style>
@@ -160,6 +184,21 @@
     </div>
 
     <button id="completeBtn" class="done-btn" onclick="toggleComplete()">오늘 3시간 완주 체크 완료</button>
+
+    <!-- 커피 한잔 후원 섹션 -->
+    <div class="donate-card">
+      <div class="donate-title" id="donateTitle">☕ 준킴에게 커피 한잔 후원하기</div>
+      <div class="donate-sub" id="donateSub">이 루틴 웹앱이 연습에 도움이 되셨다면 따뜻한 응원을 보내주세요!</div>
+      <div class="donate-btn-grid">
+        <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="donate-btn donate-btn-kakao">
+          <span>💛</span> 카카오페이 송금
+        </a>
+        <a href="https://ko-fi.com/junkimmusic" target="_blank" rel="noopener" class="donate-btn donate-btn-kofi">
+          <span>☕</span> Ko-fi (Global)
+        </a>
+      </div>
+    </div>
+
   </div>
 
   <!-- 메트로놈 바 -->
@@ -258,8 +297,8 @@
 
   <div class="modal" id="masterModal">
     <div class="master-modal-box">
-      <img src="https://images2.imgbox.com/7d/51/HkM7fV78_o.png" alt="준킴 코치" class="master-img" onerror="this.src='https://via.placeholder.com/140?text=JunKim'">
-      <div class="master-title" id="masterHeading">🏆 1,095일 완주를 축하합니다!</div>
+      <div style="font-size:42px; margin-bottom:10px;">🏆</div>
+      <div class="master-title" id="masterHeading">1,095일 완주를 축하합니다!</div>
       <div style="font-size:13px; color:#fbbf24; font-weight:bold; margin-bottom:10px;">The 1095-Day Jazz Guitar Journey Completed</div>
       <div class="master-text" id="masterBody">
         <strong>"당신은 해냈습니다."</strong><br><br>
@@ -329,7 +368,6 @@
       return 361 + ((tuneIndex - 12) * 14);
     }
 
-    // 신규 리듬 일별 로테이션 규칙 함수
     function getTodayRhythm(d) {
       var isEn = (currentLang === 'en');
       var r4 = isEn ? "Quarter Notes" : "4분음표";
@@ -339,17 +377,14 @@
       var r6trip = isEn ? "Sextuplets" : "6잇단음표";
       var r32 = isEn ? "32nd / Syncopated" : "32분음표/변형";
 
-      // 1~2주차: 3개 리듬 순환 (1일 4분, 2일 8분, 3일 16분...)
       if (d <= 14) {
         var pool1 = [r4, r8, r16];
         return pool1[(d - 1) % pool1.length];
       }
-      // 3~4주차: 5개 리듬 순환 (3잇단, 6잇단 추가)
       if (d <= 28) {
         var pool2 = [r4, r8, r16, r3trip, r6trip];
         return pool2[(d - 1) % pool2.length];
       }
-      // 5주차부터 학습 종료일까지: 6개 전체 리듬 순환
       var pool3 = [r4, r8, r16, r3trip, r6trip, r32];
       return pool3[(d - 1) % pool3.length];
     }
@@ -374,6 +409,8 @@
         memoPlaceholder: "교재 페이지, 과제 곡, 레슨 메모 입력",
         btnDone: "오늘 3시간 완주 체크 완료",
         btnDoneCancel: "✓ 오늘(Day {d}) 완주 완료됨 (취소하려면 클릭)",
+        donateTitle: "☕ 준킴에게 커피 한잔 후원하기",
+        donateSub: "이 루틴 웹앱이 연습에 도움이 되셨다면 따뜻한 응원을 보내주세요!",
         proWatch: "보기",
         idxModalHead: "🔍 연습 주제별 숏컷 & 바로가기",
         idxSecScale: "🎯 핵심 스케일 & 모드 (도입 시점)",
@@ -462,6 +499,8 @@
         memoPlaceholder: "Page numbers, tune notes, practice reflections...",
         btnDone: "Complete Today's 3-Hour Practice",
         btnDoneCancel: "✓ Completed Day {d} (Click to undo)",
+        donateTitle: "☕ Buy JunKim a Coffee",
+        donateSub: "If this routine app supports your jazz journey, consider buying a cup of coffee!",
         proWatch: "Watch",
         idxModalHead: "🔍 Curriculum Index & Jump",
         idxSecScale: "🎯 Scales & Modes (Introduction Days)",
@@ -657,6 +696,8 @@
       document.getElementById('personalSub').innerText = t.personalSub || "개인 교재 / 자유 과제";
       document.getElementById('personalItem').innerText = t.personalItem || "오늘 개인 교재 및 자유 과제 완료";
       document.getElementById('memoBox').placeholder = t.memoPlaceholder || "";
+      document.getElementById('donateTitle').innerText = t.donateTitle || "☕ 준킴에게 커피 한잔 후원하기";
+      document.getElementById('donateSub').innerText = t.donateSub || "이 루틴 웹앱이 연습에 도움이 되셨다면 따뜻한 응원을 보내주세요!";
       document.getElementById('statsModalTitle').innerText = t.statsModalTitle || "📊 1095 재즈기타 마스터 성취도";
       document.getElementById('statY1Label').innerText = t.y1Label || "1년 차";
       document.getElementById('statY2Label').innerText = t.y2Label || "2년 차";
@@ -794,7 +835,6 @@
       var activeIdx = (d - Math.floor(d / 7) - 1);
       var currentKey = keys[activeIdx % 12];
       
-      // 일별 자동 전환 리듬 가져오기
       var rhythm = getTodayRhythm(d);
       
       var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
