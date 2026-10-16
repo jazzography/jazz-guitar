@@ -53,6 +53,25 @@
     }
     .arrow-btn { font-size: 13px; padding: 6px 12px; }
 
+    /* 복원된 세련된 미니 진척도 바 */
+    .progress-box {
+      background: #14171f; border: 1px solid #232834; border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 12px;
+    }
+    .progress-head {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
+      font-size: 12px; font-weight: 700; color: #94a3b8;
+    }
+    .progress-bar-bg { width: 100%; height: 7px; background: #21262d; border-radius: 4px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #d97706, #fbbf24);
+      border-radius: 4px; transition: width 0.3s ease;
+    }
+    .stats-link-btn {
+      background: none; border: none; color: #38bdf8; font-size: 11.5px; font-weight: 800;
+      cursor: pointer; padding: 0;
+    }
+
     /* 오늘의 핵심 요약 카드 */
     .today-summary-card {
       background: linear-gradient(135deg, #181d28 0%, #12151c 100%);
@@ -124,9 +143,7 @@
     }
     .done-btn.completed { background: #166534; color: #86efac; }
 
-    /* ========================================================
-       ★ [Harmony Buster 감성] 프리미엄 커피 후원 배너 카드 ★
-       ======================================================== */
+    /* 프리미엄 커피 후원 배너 카드 */
     .sponsor-banner-card {
       margin-top: 20px;
       background: linear-gradient(145deg, #181920 0%, #111217 100%);
@@ -199,6 +216,16 @@
     /* 모달 */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-box { background: #14171f; border: 1px solid #334155; border-radius: 12px; padding: 20px; max-width: 420px; width: 100%; }
+    
+    /* 통계 모달 스타일 */
+    .year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+    .year-item { background: #1c212c; border: 1px solid #282d37; border-radius: 8px; padding: 10px; text-align: center; }
+    .year-item div:first-child { font-size: 11px; color: #94a3b8; }
+    .year-item div:last-child { font-size: 13px; font-weight: 800; color: #facc15; margin-top: 4px; }
+    .grass-matrix { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 8px; }
+    .grass-cell { aspect-ratio: 1; border-radius: 3px; background: #21262d; }
+    .grass-cell.done { background: #22c55e; }
+    .grass-cell.current { border: 1px solid #facc15; }
   </style>
 </head>
 <body>
@@ -227,6 +254,17 @@
       </div>
     </div>
 
+    <!-- 복원된 슬림 진척도 카드 -->
+    <div class="progress-box">
+      <div class="progress-head">
+        <span>🏆 3년 진척도: <strong id="progressDoneText" style="color:#facc15;">0</strong> / 1095일 (<span id="progressActualPct">0.0%</span>)</span>
+        <button onclick="openStatsModal()" class="stats-link-btn" id="statsBtnText">📊 분석</button>
+      </div>
+      <div class="progress-bar-bg">
+        <div id="progressBarFill" class="progress-bar-fill"></div>
+      </div>
+    </div>
+
     <!-- 오늘의 요약 카드 (Key & 리듬 한눈에 보기) -->
     <div class="today-summary-card">
       <div class="summary-left">
@@ -250,7 +288,7 @@
     <!-- 완주 체크 버튼 -->
     <button id="completeBtn" class="done-btn" onclick="toggleComplete()">오늘 3시간 완주 체크 완료</button>
 
-    <!-- ★ Harmony Buster 감성의 프리미엄 후원 배너 ★ -->
+    <!-- Harmony Buster 감성의 프리미엄 후원 배너 -->
     <div class="sponsor-banner-card">
       <div class="sponsor-badge" id="sponsorBadge">☕ Buy JunKim a Coffee</div>
       <div class="sponsor-title" id="sponsorTitle">준킴 코치에게 커피 한 잔으로 응원하기</div>
@@ -281,6 +319,26 @@
         <button onclick="stepBpm(5)">+5</button>
       </div>
       <button id="playBtn" class="play-btn" onclick="toggleMetro()">▶ START</button>
+    </div>
+  </div>
+
+  <!-- 통계 및 잔디 모달 (복원) -->
+  <div class="modal" id="statsModal">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div style="font-size:15px; font-weight:800; color:#38bdf8;" id="statsModalTitle">📊 1095 완주 성취도 분석</div>
+        <button onclick="closeStatsModal()" style="background:none; border:none; color:#94a3b8; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="year-grid">
+        <div class="year-item"><div id="statY1Label">1년 차 (기초)</div><div id="y1Stats">0 / 365</div></div>
+        <div class="year-item"><div id="statY2Label">2년 차 (심화)</div><div id="y2Stats">0 / 365</div></div>
+        <div class="year-item"><div id="statY3Label">3년 차 (마스터)</div><div id="y3Stats">0 / 365</div></div>
+      </div>
+      <div style="font-size:12.5px; font-weight:700; color:#cbd5e1; margin-bottom:6px;" id="statsGrassLabel">최근 30일 완주 현황 (초록: 완료)</div>
+      <div id="grassGrid" class="grass-matrix"></div>
+      <div style="margin-top:16px; text-align:center;">
+        <button onclick="closeStatsModal()" style="background:#21262d; border:1px solid #444; color:#fff; padding:7px 20px; border-radius:6px; font-size:12.5px; cursor:pointer;">닫기</button>
+      </div>
     </div>
   </div>
 
@@ -384,6 +442,16 @@
       try { return JSON.parse(safeGet('jazz_completed_map', '{}')) || {}; } catch(e) { return {}; }
     }
 
+    function updateProgressUI() {
+      var map = getCompletedMap();
+      var doneCount = Object.keys(map).length;
+      var pct = ((doneCount / 1095) * 100).toFixed(1);
+      
+      document.getElementById('progressDoneText').innerText = doneCount;
+      document.getElementById('progressActualPct').innerText = pct + '%';
+      document.getElementById('progressBarFill').style.width = Math.max(1, pct) + '%';
+    }
+
     function toggleStep(idx) {
       activeStepIdx = (activeStepIdx === idx) ? -1 : idx;
       render(currentDay);
@@ -400,6 +468,7 @@
       document.getElementById('sponsorTip').innerText = isKo 
         ? "따뜻한 응원은 더 좋은 음악 콘텐츠와 앱 개발의 큰 힘이 됩니다 🙏"
         : "Your warm support fuels more high-quality music content and tool improvements 🙏";
+      document.getElementById('statsBtnText').innerText = isKo ? "📊 분석" : "📊 Stats";
     }
 
     function toggleLang() {
@@ -414,6 +483,32 @@
     function openIndexModal() { populateTuneSelect(); document.getElementById('indexModal').style.display = 'flex'; }
     function closeIndexModal() { document.getElementById('indexModal').style.display = 'none'; }
     function closeModal() { document.getElementById('praiseModal').style.display = 'none'; }
+
+    function openStatsModal() {
+      var map = getCompletedMap();
+      var y1 = 0, y2 = 0, y3 = 0;
+      for (var k in map) {
+        var dayNum = parseInt(k, 10);
+        if (dayNum <= 365) y1++;
+        else if (dayNum <= 730) y2++;
+        else if (dayNum <= 1095) y3++;
+      }
+      document.getElementById('y1Stats').innerText = y1 + ' / 365 (' + ((y1/365)*100).toFixed(0) + '%)';
+      document.getElementById('y2Stats').innerText = y2 + ' / 365 (' + ((y2/365)*100).toFixed(0) + '%)';
+      document.getElementById('y3Stats').innerText = y3 + ' / 365 (' + ((y3/365)*100).toFixed(0) + '%)';
+
+      var start = Math.max(1, currentDay - 15);
+      var end = Math.min(1095, start + 29);
+      var html = '';
+      for (var i = start; i <= end; i++) {
+        var isDone = map[i] ? 'done' : '';
+        var isCur = (i === currentDay) ? 'current' : '';
+        html += '<div class="grass-cell ' + isDone + ' ' + isCur + '" title="Day ' + i + '"></div>';
+      }
+      document.getElementById('grassGrid').innerHTML = html;
+      document.getElementById('statsModal').style.display = 'flex';
+    }
+    function closeStatsModal() { document.getElementById('statsModal').style.display = 'none'; }
 
     function jumpToDay(targetDay) {
       currentDay = Math.max(1, Math.min(1095, targetDay));
@@ -480,6 +575,8 @@
         btn.innerText = '오늘 3시간 완주 체크 완료';
         btn.classList.remove('completed');
       }
+
+      updateProgressUI();
 
       if (d % 7 === 0) {
         document.getElementById('summaryKeyText').innerText = "REST & JAM";
