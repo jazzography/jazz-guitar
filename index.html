@@ -9,7 +9,6 @@
   
   <title>1095 Jazz Guitar</title>
   
-  <!-- 카카오톡/SNS 텍스트 전용 심플 프리뷰 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="1095 Jazz Guitar - 3년 완주 재즈기타 루틴">
   <meta property="og:description" content="매일 3시간, 12키와 스케일·보이스리딩·코드멜로디 자동 배정 데일리 연습 엔진">
@@ -19,7 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="1095 Jazz Guitar">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0a0a0c">
+  <meta name="theme-color" content="#0b0c10">
   
   <style>
     :root {
@@ -52,7 +51,6 @@
       line-height: 1.45;
     }
 
-    /* 모바일 앱 뷰포트 컨테이너 (데스크톱에서는 아이폰 프레임화) */
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -64,7 +62,7 @@
       box-shadow: 0 0 50px rgba(0,0,0,0.85);
       border-left: 1px solid #181b24;
       border-right: 1px solid #181b24;
-      padding-bottom: 96px; /* 하단 탭바 여백 */
+      padding-bottom: 96px;
     }
 
     /* iOS 네이티브 헤더 */
@@ -73,7 +71,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(11, 12, 16, 0.85);
+      background: rgba(11, 12, 16, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       position: sticky;
@@ -103,13 +101,12 @@
     }
     .lang-pill-btn:active { transform: scale(0.95); }
 
-    /* 메인 스크롤 콘텐츠 */
     .app-content {
       padding: 12px 18px 20px;
       flex: 1;
     }
 
-    /* 상단 D-Day 가로 셀렉터 바 */
+    /* 상단 D-Day 가로 휠 셀렉터 */
     .day-selector-bar {
       display: flex;
       align-items: center;
@@ -137,6 +134,7 @@
       font-weight: 900;
       letter-spacing: -0.2px;
       box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+      cursor: pointer;
     }
     .day-arrow {
       color: var(--txt-muted);
@@ -145,14 +143,13 @@
       padding: 6px 8px;
     }
 
-    /* ★ 이미지 속 시그니처: TODAY'S MISSION 앰버 오렌지 네온 카드 ★ */
+    /* TODAY'S MISSION 앰버 네온 카드 */
     .mission-card {
       background: linear-gradient(180deg, #181412 0%, #121010 100%);
       border: 2px solid var(--amber-border);
       border-radius: 18px;
       padding: 18px 18px 14px;
-      margin-bottom: 22px;
-      position: relative;
+      margin-bottom: 20px;
       box-shadow: 0 0 28px var(--amber-glow), inset 0 0 16px rgba(245, 158, 11, 0.08);
     }
     .mission-badge-head {
@@ -201,7 +198,6 @@
       margin-top: 5px;
     }
 
-    /* 미션 카드 내부 프로그레스 바 */
     .mission-progress-wrap {
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       padding-top: 10px;
@@ -230,26 +226,19 @@
       transition: width 0.3s ease;
     }
 
-    /* 루틴 스텝 섹션 헤더 */
-    .sec-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
+    /* 루틴 스텝 아코디언 */
     .sec-label {
       font-size: 12px;
       font-weight: 900;
       color: var(--txt-muted);
       letter-spacing: 0.8px;
+      margin-bottom: 8px;
     }
-
-    /* 아코디언 스텝 카드 */
     .routine-accordion {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
     .step-card {
       background: #14161c;
@@ -329,7 +318,36 @@
       font-weight: 700;
     }
 
-    /* 완주 버튼 (이미지 형태) */
+    /* 개인 연습 메모 박스 (복원) */
+    .memo-card {
+      background: #12141a;
+      border: 1px solid #202430;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .memo-head {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #c084fc;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .memo-textarea {
+      width: 100%;
+      background: #090a0d;
+      border: 1px solid #232733;
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      line-height: 1.45;
+      resize: vertical;
+    }
+
+    /* 완주 버튼 */
     .complete-action-btn {
       width: 100%;
       background: linear-gradient(180deg, #2a221b 0%, #1e1713 100%);
@@ -337,47 +355,67 @@
       color: #fde047;
       font-weight: 900;
       font-size: 15.5px;
-      padding: 16px;
+      padding: 15px;
       border-radius: 12px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.4);
       transition: all 0.15s;
     }
-    .complete-action-btn:active {
-      transform: scale(0.97);
-    }
+    .complete-action-btn:active { transform: scale(0.97); }
     .complete-action-btn.is-completed {
       background: linear-gradient(180deg, #144026 0%, #0d2c1a 100%);
       border-color: #22c55e;
       color: #86efac;
     }
 
-    /* 커피 후원 심플 필 버튼 (이미지 형태) */
-    .coffee-pill-btn {
-      width: 100%;
-      background: #14151b;
-      border: 1px solid #282a36;
-      border-radius: 12px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-      color: #cbd5e1;
-      transition: all 0.15s;
+    /* 프리미엄 듀얼 커피 후원 배너 (복원) */
+    .sponsor-banner-card {
+      background: linear-gradient(145deg, #16171d 0%, #101115 100%);
+      border: 1px solid #332d25;
+      border-radius: 14px;
+      padding: 16px 14px;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
       margin-bottom: 16px;
     }
-    .coffee-pill-btn:active { transform: scale(0.98); background: #1a1c24; }
+    .sponsor-banner-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
+    }
+    .sponsor-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fde047; font-size: 11.5px; font-weight: 800;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+    }
+    .sponsor-title {
+      font-size: 14.5px; font-weight: 900; color: #f8fafc; margin-bottom: 5px;
+    }
+    .sponsor-desc {
+      font-size: 12px; color: #94a3b8; line-height: 1.5; margin-bottom: 12px; word-break: keep-all;
+    }
+    .sponsor-actions {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .sponsor-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 8px; border-radius: 8px; text-decoration: none;
+      font-size: 12.5px; font-weight: 800; transition: transform 0.15s;
+    }
+    .sponsor-btn:active { transform: scale(0.97); }
+    .sponsor-btn-kakao { background: #fee500; color: #191919; }
+    .sponsor-btn-kofi { background: #ff5e5b; color: #ffffff; }
 
-    /* ★ 하단 고정 5개 네비게이션 탭바 (Glassmorphism) ★ */
+    /* 하단 고정 탭바 */
     .bottom-tab-bar {
       position: fixed;
       bottom: 0;
@@ -385,15 +423,15 @@
       transform: translateX(-50%);
       width: 100%;
       max-width: 440px;
-      height: 74px;
-      background: rgba(15, 17, 23, 0.88);
+      height: 72px;
+      background: rgba(15, 17, 23, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       z-index: 100;
-      padding-bottom: env(safe-area-inset-bottom, 8px);
+      padding-bottom: env(safe-area-inset-bottom, 6px);
     }
     .tab-item {
       display: flex;
@@ -404,20 +442,16 @@
       text-decoration: none;
       font-size: 10.5px;
       font-weight: 700;
-      gap: 4px;
+      gap: 3px;
       cursor: pointer;
       user-select: none;
       transition: all 0.15s;
     }
     .tab-item:active { transform: scale(0.92); }
-    .tab-item.active {
-      color: #fbbf24;
-    }
-    .tab-icon {
-      font-size: 18px;
-    }
+    .tab-item.active { color: #fbbf24; }
+    .tab-icon { font-size: 18px; }
 
-    /* ★ 3번째 화면: 바텀 시트 (Bottom Sheet) 모달 ★ */
+    /* 바텀 시트 오버레이 */
     .sheet-overlay {
       display: none;
       position: fixed;
@@ -429,19 +463,17 @@
       align-items: flex-end;
       justify-content: center;
     }
-    .sheet-overlay.open {
-      display: flex;
-    }
+    .sheet-overlay.open { display: flex; }
     .bottom-sheet-card {
       width: 100%;
       max-width: 440px;
       background: #181920;
       border-top: 1px solid #323544;
       border-radius: 20px 20px 0 0;
-      padding: 12px 20px 34px;
+      padding: 12px 18px 30px;
       box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
       animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      max-height: 80vh;
+      max-height: 82vh;
       display: flex;
       flex-direction: column;
     }
@@ -450,39 +482,43 @@
       to { transform: translateY(0); }
     }
     .drag-handle {
-      width: 42px;
-      height: 4.5px;
+      width: 40px;
+      height: 4px;
       background: #3f4254;
-      border-radius: 3px;
-      margin: 0 auto 14px;
+      border-radius: 2px;
+      margin: 0 auto 12px;
     }
     .sheet-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 900;
       color: #f8fafc;
       text-align: center;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      margin-bottom: 14px;
     }
-    .sheet-list-box {
+    .sheet-scroll-box {
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      padding-right: 2px;
+    }
+    .sheet-section-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: #c084fc;
+      margin: 10px 0 4px;
+      text-transform: uppercase;
     }
     .sheet-row-btn {
       width: 100%;
       background: #111217;
       border: 1px solid #222530;
       color: #f1f5f9;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 13.5px;
+      padding: 11px 12px;
+      border-radius: 8px;
+      font-size: 13px;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
@@ -497,7 +533,7 @@
       display: flex;
       gap: 8px;
       border-top: 1px solid #262936;
-      padding-top: 12px;
+      padding-top: 10px;
       align-items: center;
     }
     .sheet-input {
@@ -505,9 +541,9 @@
       background: #0f1015;
       border: 1px solid #333748;
       color: #fff;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 800;
       text-align: center;
     }
@@ -516,24 +552,34 @@
       color: #000;
       border: none;
       font-weight: 900;
-      padding: 0 18px;
-      height: 40px;
+      padding: 0 16px;
+      height: 38px;
       border-radius: 8px;
       cursor: pointer;
     }
 
-    /* 일반 팝업 모달 */
-    .simple-modal-box {
-      background: #181922;
-      border: 1px solid #323544;
+    /* 팝업 모달 (명언 / 마스터) */
+    .center-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .center-modal-overlay.open { display: flex; }
+    .center-modal-box {
+      background: #181a24;
+      border: 1.5px solid var(--amber-main);
       border-radius: 16px;
-      padding: 22px;
-      max-width: 380px;
-      width: 90%;
+      padding: 24px 20px;
+      max-width: 360px;
+      width: 100%;
       text-align: center;
     }
 
-    /* 통계 잔디 매트릭스 */
     .grass-matrix {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
@@ -561,7 +607,6 @@
       </button>
     </header>
 
-    <!-- 메인 컨텐츠 영역 -->
     <main class="app-content">
       
       <!-- 상단 D-Day 가로 휠 셀렉터 -->
@@ -574,7 +619,7 @@
         <span class="sub-day-btn" onclick="moveDay(1)" id="next1DayTxt">[ D-4 ]</span>
       </div>
 
-      <!-- ★ TODAY'S MISSION 앰버 네온 카드 ★ -->
+      <!-- TODAY'S MISSION 앰버 네온 카드 -->
       <div class="mission-card">
         <div class="mission-badge-head">
           <span>🎸</span> <span id="missionHeading">TODAY'S MISSION (Year 1)</span>
@@ -583,7 +628,7 @@
         <div class="mission-grid">
           <div class="mission-item-left">
             <div class="mission-key-title" id="mKeyTitle">C Major</div>
-            <div class="mission-rhythm-sub" id="mRhythmTitle">16분음표 ♩</div>
+            <div class="mission-rhythm-sub" id="mRhythmTitle">16분음표 ♬</div>
           </div>
           <div class="mission-item-right">
             <div class="mission-pos-title" id="mPosTitle">Pos 3 (CAGED)</div>
@@ -603,25 +648,43 @@
       </div>
 
       <!-- ROUTINE STEPS 목록 -->
-      <div class="sec-header-row">
-        <div class="sec-label" id="routineSecLabel">ROUTINE STEPS</div>
-      </div>
-
+      <div class="sec-label" id="routineSecLabel">ROUTINE STEPS</div>
       <div class="routine-accordion" id="accordionBox"></div>
 
-      <!-- 오늘 3시간 루틴 완주하기 버튼 -->
+      <!-- 개인 교재 & 레슨 메모 (복원) -->
+      <div class="memo-card">
+        <div class="memo-head">
+          <span id="personalTitle">★ MY PERSONAL PRACTICE</span>
+          <span style="font-size:11px; color:#64748b;" id="personalSub">자유 과제</span>
+        </div>
+        <textarea id="memoBox" class="memo-textarea" rows="2" placeholder="교재 페이지, 과제 곡, 레슨 메모 입력" oninput="saveMemo()"></textarea>
+      </div>
+
+      <!-- 완주 체크 버튼 -->
       <button class="complete-action-btn" id="finishBtn" onclick="toggleComplete()">
         <span>✓</span> <span id="finishBtnTxt">오늘 3시간 루틴 완주하기</span>
       </button>
 
-      <!-- 커피 후원 버튼 -->
-      <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="coffee-pill-btn" id="coffeePill">
-        <span>☕</span> <span>Buy JunKim a Coffee (카카오페이 / Ko-fi)</span>
-      </a>
+      <!-- Harmony Buster 감성의 듀얼 커피 후원 배너 -->
+      <div class="sponsor-banner-card">
+        <div class="sponsor-badge" id="sponsorBadge">☕ Buy JunKim a Coffee</div>
+        <div class="sponsor-title" id="sponsorTitle">준킴 코치에게 커피 한 잔으로 응원하기</div>
+        <div class="sponsor-desc" id="sponsorDesc">
+          매일 3시간, 묵묵히 12키의 벽을 넘어서는 여러분의 페이스메이커가 되어 드립니다. 오늘의 연습에 작은 영감이 되었다면 따뜻한 커피 한 잔을 선물해 주세요!
+        </div>
+        <div class="sponsor-actions">
+          <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="sponsor-btn sponsor-btn-kakao">
+            <span>💛</span> <span id="btnKakaoTxt">카카오페이 송금</span>
+          </a>
+          <a href="https://ko-fi.com/junkimmusic" target="_blank" rel="noopener" class="sponsor-btn sponsor-btn-kofi">
+            <span>☕</span> <span>Ko-fi (Global)</span>
+          </a>
+        </div>
+      </div>
 
     </main>
 
-    <!-- ★ 하단 고정 5개 네비게이션 탭바 ★ -->
+    <!-- 하단 고정 5개 네비게이션 탭바 -->
     <nav class="bottom-tab-bar">
       <div class="tab-item active" onclick="switchTab('routine')">
         <span class="tab-icon">🏠</span>
@@ -629,7 +692,7 @@
       </div>
       <div class="tab-item" onclick="switchTab('fretboard')">
         <span class="tab-icon">🎸</span>
-        <span id="tab2Txt">지판뷰어</span>
+        <span id="tab2Txt">주제점프</span>
       </div>
       <div class="tab-item" onclick="switchTab('metro')">
         <span class="tab-icon">⏱️</span>
@@ -647,27 +710,29 @@
 
   </div>
 
-  <!-- ★ 3번째 화면: 바텀 시트 (곡/주제 숏컷 이동) ★ -->
+  <!-- 바텀 시트: 연습 주제 & 스탠다드 64곡 점프 -->
   <div class="sheet-overlay" id="jumpSheet" onclick="closeJumpSheet(event)">
     <div class="bottom-sheet-card" onclick="event.stopPropagation()">
       <div class="drag-handle"></div>
-      <div class="sheet-title">🎯 <span id="sheetHeadTitle">연습 곡 / 주제 선택</span></div>
+      <div class="sheet-title">🎯 <span id="sheetHeadTitle">연습 곡 / 주제 바로가기</span></div>
       
-      <div class="sheet-list-box" id="sheetListItems"></div>
+      <div class="sheet-scroll-box" id="sheetListItems"></div>
 
       <div class="sheet-direct-row">
-        <input type="number" id="sheetDayInput" class="sheet-input" min="1" max="1095" placeholder="Day 직접 입력: ( 42 )">
+        <input type="number" id="sheetDayInput" class="sheet-input" min="1" max="1095" placeholder="Day 직접 입력 (1~1095)">
         <button class="sheet-jump-btn" onclick="directJumpFromSheet()" id="sheetMoveBtn">이동</button>
       </div>
     </div>
   </div>
 
-  <!-- 메트로놈 바텀 시트 팝업 -->
+  <!-- 메트로놈 바텀 시트 -->
   <div class="sheet-overlay" id="metroSheet" onclick="closeMetroSheet(event)">
     <div class="bottom-sheet-card" onclick="event.stopPropagation()" style="text-align:center;">
       <div class="drag-handle"></div>
       <div class="sheet-title">⏱️ Web Audio 메트로놈</div>
-      <div style="font-size:46px; font-weight:900; color:#fbbf24; margin:10px 0;"><span id="bpmDisplay">85</span> <span style="font-size:14px; color:#94a3b8;">BPM</span></div>
+      <div style="font-size:46px; font-weight:900; color:#fbbf24; margin:10px 0;">
+        <span id="bpmDisplay">85</span> <span style="font-size:14px; color:#94a3b8;">BPM</span>
+      </div>
       <div style="display:flex; justify-content:center; gap:8px; margin-bottom:20px;">
         <button onclick="stepBpm(-5)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:16px;">-5</button>
         <button onclick="stepBpm(-1)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:18px;">-</button>
@@ -678,15 +743,15 @@
     </div>
   </div>
 
-  <!-- 통계 바텀 시트 -->
+  <!-- 완주 통계 바텀 시트 -->
   <div class="sheet-overlay" id="statsSheet" onclick="closeStatsSheet(event)">
     <div class="bottom-sheet-card" onclick="event.stopPropagation()">
       <div class="drag-handle"></div>
       <div class="sheet-title">📊 3년 완주 스트릭 & 잔디</div>
       <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; text-align:center;">
-        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">1년차</div><div id="stY1" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
-        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">2년차</div><div id="stY2" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
-        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">3년차</div><div id="stY3" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">1년차 (기초)</div><div id="stY1" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">2년차 (심화)</div><div id="stY2" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">3년차 (마스터)</div><div id="stY3" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
       </div>
       <div style="font-size:12px; color:#94a3b8; font-weight:bold; margin-bottom:6px;">최근 30일 루틴 달성 잔디:</div>
       <div class="grass-matrix" id="grassGrid"></div>
@@ -701,19 +766,39 @@
       <div class="sheet-title">⚙️ 앱 환경설정</div>
       <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
         <button onclick="toggleLang(); closeSettingsSheet();" class="sheet-row-btn">
-          <span>🌐 언어 변경 (Language Toggle)</span>
+          <span>🌐 언어 변경 (Toggle Language)</span>
           <span style="color:#fbbf24;" id="setLangTxt">한국어 / English</span>
         </button>
-        <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="sheet-row-btn" style="text-decoration:none;">
-          <span>💛 카카오페이 커피 후원</span>
-          <span>열기 ↗</span>
-        </a>
-        <a href="https://ko-fi.com/junkimmusic" target="_blank" rel="noopener" class="sheet-row-btn" style="text-decoration:none;">
-          <span>☕ Ko-fi 글로벌 도네이션</span>
-          <span>열기 ↗</span>
+        <a href="https://www.youtube.com/channel/UCI8PtsibK2wGkrvaKUdW0kg/join" target="_blank" rel="noopener" class="sheet-row-btn" style="text-decoration:none;">
+          <span>● 준킴뮤직 프로반 멤버십 라이브</span>
+          <span style="color:#ef4444;">월 9pm ↗</span>
         </a>
       </div>
       <button onclick="closeSettingsSheet()" style="width:100%; background:#222530; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 완주 축하 명언 팝업 모달 (복원) -->
+  <div class="center-modal-overlay" id="praiseModal">
+    <div class="center-modal-box">
+      <div style="font-size:32px;">🎸</div>
+      <h3 style="font-size:18px; margin-top:6px; color:#fff;" id="praiseHead">오늘의 세션 완료!</h3>
+      <p id="praiseQuote" style="margin:14px 0; font-size:14px; color:#fde047; font-weight:600; line-height:1.6;"></p>
+      <button onclick="closePraiseModal()" style="background:#22c55e; color:#000; font-weight:900; border:none; padding:10px 24px; border-radius:8px; cursor:pointer;">확인</button>
+    </div>
+  </div>
+
+  <!-- 1,095일 최종 완주 모달 (복원) -->
+  <div class="center-modal-overlay" id="masterModal">
+    <div class="center-modal-box" style="max-width:380px;">
+      <div style="font-size:38px;">🏆</div>
+      <h3 style="font-size:20px; color:#facc15; margin:8px 0;">1,095일 완주를 축하합니다!</h3>
+      <p style="font-size:13.5px; color:#e2e8f0; line-height:1.6; text-align:left; margin:14px 0;">
+        <strong>"당신은 해냈습니다."</strong><br><br>
+        3년이라는 시간 동안 매일 3시간, 묵묵히 12키와 스케일, 보이스 리딩, 그리고 코드 멜로디의 벽을 넘어서셨습니다. 이제 자유롭게 당신만의 재즈를 노래하세요!
+      </p>
+      <div style="font-size:12px; color:#94a3b8; text-align:right; margin-bottom:14px;">- 준킴 드림</div>
+      <button onclick="closeMasterModal()" style="width:100%; background:#facc15; color:#000; font-weight:900; border:none; padding:12px; border-radius:8px; cursor:pointer;">나만의 재즈 연주 시작하기 🎺</button>
     </div>
   </div>
 
@@ -748,6 +833,14 @@
       "Spain", "Anthropology"
     ];
 
+    var quotesList = [
+      "대가들은 새로운 것을 많이 아는 사람이 아니라, 기본 진행을 눈 감고도 칠 때까지 반복한 사람입니다.",
+      "재즈에서 같은 루틴을 다시 연습한다는 건, 비로소 내 온전한 언어가 되기 시작했다는 뜻입니다.",
+      "1회독 때는 음을 보고, 2회독 때는 소리를 듣고, 3회독 때는 음악을 만듭니다.",
+      "오늘 이 Key에서의 미세한 마찰과 저항은 내일의 가장 매끄러운 프레이즈가 됩니다.",
+      "루틴을 매일 묵묵히 통과한 연주자만이 무대 위에서 완전한 자유를 누립니다."
+    ];
+
     function safeSave(k, v) { try { localStorage.setItem(k, String(v)); } catch(e) {} }
     function safeGet(k, def) {
       try {
@@ -758,8 +851,8 @@
     }
 
     var currentLang = safeGet('jazz_lang', 'ko');
-    var rawDay = parseInt(safeGet('jazz_day', '3'), 10);
-    var currentDay = (!isNaN(rawDay) && rawDay >= 1 && rawDay <= 1095) ? rawDay : 3;
+    var rawDay = parseInt(safeGet('jazz_day', '1'), 10);
+    var currentDay = (!isNaN(rawDay) && rawDay >= 1 && rawDay <= 1095) ? rawDay : 1;
     var activeStepIdx = 0;
 
     function getTuneStartDay(i) {
@@ -776,16 +869,9 @@
       var r6trip = isEn ? "Sextuplets" : "6잇단음표";
       var r32 = isEn ? "32nd / Sync" : "32분음표/변형";
 
-      if (d <= 14) {
-        var pool1 = [r4, r8, r16];
-        return pool1[(d - 1) % pool1.length];
-      }
-      if (d <= 28) {
-        var pool2 = [r4, r8, r16, r3trip, r6trip];
-        return pool2[(d - 1) % pool2.length];
-      }
-      var pool3 = [r4, r8, r16, r3trip, r6trip, r32];
-      return pool3[(d - 1) % pool3.length];
+      if (d <= 14) return [r4, r8, r16][(d - 1) % 3];
+      if (d <= 28) return [r4, r8, r16, r3trip, r6trip][(d - 1) % 5];
+      return [r4, r8, r16, r3trip, r6trip, r32][(d - 1) % 6];
     }
 
     function getCompletedMap() {
@@ -801,7 +887,18 @@
       currentLang = (currentLang === 'ko') ? 'en' : 'ko';
       safeSave('jazz_lang', currentLang);
       document.getElementById('curLangCode').innerText = (currentLang === 'ko') ? 'EN' : 'KO';
+      updateSponsorText();
       render(currentDay);
+    }
+
+    function updateSponsorText() {
+      var isKo = (currentLang === 'ko');
+      document.getElementById('sponsorBadge').innerText = isKo ? "☕ Buy JunKim a Coffee" : "☕ Support Coach Jun Kim";
+      document.getElementById('sponsorTitle').innerText = isKo ? "준킴 코치에게 커피 한 잔으로 응원하기" : "Support JunKim with a Coffee";
+      document.getElementById('sponsorDesc').innerText = isKo 
+        ? "매일 3시간, 묵묵히 12키의 벽을 넘어서는 여러분의 페이스메이커가 되어 드립니다. 오늘의 연습에 작은 영감이 되었다면 따뜻한 커피 한 잔을 선물해 주세요!"
+        : "Practicing 3 hours daily across all 12 keys is a tough journey. If this routine inspires your practice, consider buying Coach JunKim a coffee!";
+      document.getElementById('btnKakaoTxt').innerText = isKo ? "카카오페이 송금" : "KakaoPay";
     }
 
     function moveDay(step) {
@@ -823,6 +920,10 @@
       if (!isNaN(val) && val >= 1 && val <= 1095) jumpToDay(val);
     }
 
+    function saveMemo() {
+      safeSave('jazz_memo_' + currentDay, document.getElementById('memoBox').value);
+    }
+
     function toggleComplete() {
       var map = getCompletedMap();
       if (map[currentDay]) {
@@ -831,9 +932,18 @@
       } else {
         map[currentDay] = true;
         safeSave('jazz_completed_map', JSON.stringify(map));
+        if (currentDay >= 1095) {
+          document.getElementById('masterModal').classList.add('open');
+        } else {
+          document.getElementById('praiseQuote').innerText = '"' + quotesList[Math.floor(Math.random() * quotesList.length)] + '"';
+          document.getElementById('praiseModal').classList.add('open');
+        }
       }
       render(currentDay);
     }
+
+    function closePraiseModal() { document.getElementById('praiseModal').classList.remove('open'); }
+    function closeMasterModal() { document.getElementById('masterModal').classList.remove('open'); }
 
     /* 바텀 시트 열기/닫기 */
     function openJumpSheet() {
@@ -850,20 +960,33 @@
       var curTuneIdx = currentDay <= 360 ? Math.floor((currentDay - 1) / 30) : 12 + Math.floor((currentDay - 361) / 14);
       if (curTuneIdx >= standardTunes.length) curTuneIdx = standardTunes.length - 1;
 
-      var html = '';
+      var html = '<div class="sheet-section-tag">핵심 스케일 & 모드 도입일</div>';
+      var milestones = [
+        { d: 1, name: "메이저 펜타토닉" }, { d: 15, name: "마이너 펜타토닉" },
+        { d: 29, name: "메이저 스케일" }, { d: 61, name: "메이저 블루스" },
+        { d: 75, name: "마이너 블루스" }, { d: 366, name: "멜로딕 마이너" },
+        { d: 380, name: "하모닉 마이너" }, { d: 394, name: "홀톤 (Whole-Tone)" },
+        { d: 408, name: "디미니쉬드 H/W" }, { d: 731, name: "하모닉 메이저" }
+      ];
+      for (var m = 0; m < milestones.length; m++) {
+        html += '<button class="sheet-row-btn" onclick="jumpToDay(' + milestones[m].d + ')">' +
+                  '<span>[Day ' + milestones[m].d + '] ' + milestones[m].name + '</span><span>➔</span>' +
+                '</button>';
+      }
+
+      html += '<div class="sheet-section-tag" style="margin-top:14px;">스탠다드 64곡 코드멜로디</div>';
       for (var i = 0; i < standardTunes.length; i++) {
         var startDay = getTuneStartDay(i);
         var endDay = (i < 12) ? startDay + 29 : startDay + 13;
         var isCurrent = (i === curTuneIdx) ? 'is-current' : '';
         html += '<button class="sheet-row-btn ' + isCurrent + '" onclick="jumpToDay(' + startDay + ')">' +
-                  '<span>' + standardTunes[i] + ' (Day ' + startDay + '~' + endDay + ')</span>' +
+                  '<span>#' + (i + 1) + ' ' + standardTunes[i] + ' (Day ' + startDay + '~' + endDay + ')</span>' +
                   '<span>➔</span>' +
                 '</button>';
       }
       container.innerHTML = html;
     }
 
-    /* 하단 탭 스위칭 */
     function switchTab(type) {
       if (type === 'routine') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -888,9 +1011,9 @@
         else if (d <= 730) y2++;
         else if (d <= 1095) y3++;
       }
-      document.getElementById('stY1').innerText = y1 + '/365';
-      document.getElementById('stY2').innerText = y2 + '/365';
-      document.getElementById('stY3').innerText = y3 + '/365';
+      document.getElementById('stY1').innerText = y1 + '/365 (' + ((y1/365)*100).toFixed(0) + '%)';
+      document.getElementById('stY2').innerText = y2 + '/365 (' + ((y2/365)*100).toFixed(0) + '%)';
+      document.getElementById('stY3').innerText = y3 + '/365 (' + ((y3/365)*100).toFixed(0) + '%)';
 
       var start = Math.max(1, currentDay - 15);
       var end = Math.min(1095, start + 29);
@@ -898,33 +1021,22 @@
       for (var i = start; i <= end; i++) {
         var isDone = map[i] ? 'done' : '';
         var isCur = (i === currentDay) ? 'current' : '';
-        gHtml += '<div class="grass-cell ' + isDone + ' ' + isCur + '"></div>';
+        gHtml += '<div class="grass-cell ' + isDone + ' ' + isCur + '" title="Day ' + i + '"></div>';
       }
       document.getElementById('grassGrid').innerHTML = gHtml;
     }
 
-    /* 메인 렌더 함수 */
     function render(d) {
-      // 상단 D-Day 바
       document.getElementById('curDayBadge').innerText = 'D-' + d;
       document.getElementById('prev2DayTxt').innerText = d > 2 ? '[ D-' + (d-2) + ' ]' : '';
       document.getElementById('prev1DayTxt').innerText = d > 1 ? '[ D-' + (d-1) + ' ]' : '';
       document.getElementById('next1DayTxt').innerText = d < 1095 ? '[ D-' + (d+1) + ' ]' : '';
 
+      // 메모 복원
+      document.getElementById('memoBox').value = safeGet('jazz_memo_' + d, '');
+
       var isEn = (currentLang === 'en');
       var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
-      var activeIdx = (d - Math.floor(d / 7) - 1);
-      var curKey = keys[activeIdx % 12];
-      var rhythm = getTodayRhythm(d);
-      var posTxt = yr === 1 ? ("Pos " + (((d - 1) % 5) + 1) + " (CAGED)") : ("Pos " + (((d - 1) % 7) + 1) + " (3NPS)");
-
-      // 앰버 미션 카드 데이터 갱신
-      document.getElementById('missionHeading').innerText = "TODAY'S MISSION (Year " + yr + ")";
-      document.getElementById('mKeyTitle').innerText = curKey + " Major";
-      document.getElementById('mRhythmTitle').innerText = rhythm;
-      document.getElementById('mPosTitle').innerText = posTxt;
-      document.getElementById('mBpmTitle').innerText = "BPM " + bpm;
-
       var map = getCompletedMap();
       var doneCount = Object.keys(map).length;
       var pct = ((doneCount / 1095) * 100).toFixed(1);
@@ -932,23 +1044,55 @@
       document.getElementById('mDonePct').innerText = pct + '%';
       document.getElementById('mProgressBar').style.width = Math.max(1, pct) + '%';
 
-      // 완주 버튼 토글
       var finishBtn = document.getElementById('finishBtn');
       if (map[d]) {
         finishBtn.classList.add('is-completed');
-        finishBtn.innerHTML = '<span>✓</span> <span>' + (isEn ? 'Completed (Click to Undo)' : '오늘 루틴 완주 완료됨 (취소)') + '</span>';
+        finishBtn.innerHTML = '<span>✓</span> <span>' + (isEn ? 'Completed Day ' + d + ' (Click to Undo)' : '오늘(Day ' + d + ') 완주 완료됨 (취소)') + '</span>';
       } else {
         finishBtn.classList.remove('is-completed');
         finishBtn.innerHTML = '<span>✓</span> <span>' + (isEn ? 'Complete Today 3-Hour Routine' : '오늘 3시간 루틴 완주하기') + '</span>';
       }
 
-      // 곡 정보
+      // 일요일(7의 배수) 자율 세션 복원
+      if (d % 7 === 0) {
+        document.getElementById('missionHeading').innerText = "REST & FREE JAM (Week " + Math.ceil(d/7) + ")";
+        document.getElementById('mKeyTitle').innerText = "Open Jam";
+        document.getElementById('mRhythmTitle').innerText = "자율 세션";
+        document.getElementById('mPosTitle').innerText = "자유 백킹트랙";
+        document.getElementById('mBpmTitle').innerText = "자율 템포";
+
+        document.getElementById('accordionBox').innerHTML = 
+          '<div class="step-card active">' +
+            '<div class="step-head">' +
+              '<div class="step-head-left"><span class="step-head-num">☕</span> <span>FREE JAM & REVIEW</span></div>' +
+              '<div class="step-head-right"><span>자율</span></div>' +
+            '</div>' +
+            '<div class="step-body" style="display:block;">' +
+              '<div class="task-row"><input type="checkbox"><div>손과 어깨 스트레칭 & 크로매틱 (15m)</div></div>' +
+              '<div class="task-row"><input type="checkbox"><div>이번 주 6개 키 중 뻑뻑했던 포지션 복습</div></div>' +
+              '<div class="task-row"><input type="checkbox"><div>백킹트랙 위에서 자유 즉흥연주 (Free Jam)</div></div>' +
+              '<a href="' + JOIN_URL + '" target="_blank" rel="noopener" class="video-sub-link">💬 [일 10pm] 라이브 Q&A 참여하기 (멤버십) →</a>' +
+            '</div>' +
+          '</div>';
+        return;
+      }
+
+      var activeIdx = (d - Math.floor(d / 7) - 1);
+      var curKey = keys[activeIdx % 12];
+      var rhythm = getTodayRhythm(d);
+      var posTxt = yr === 1 ? ("Pos " + (((d - 1) % 5) + 1) + " (CAGED)") : ("Pos " + (((d - 1) % 7) + 1) + " (3NPS)");
+
+      document.getElementById('missionHeading').innerText = "TODAY'S MISSION (Year " + yr + ")";
+      document.getElementById('mKeyTitle').innerText = curKey + " Major";
+      document.getElementById('mRhythmTitle').innerText = rhythm;
+      document.getElementById('mPosTitle').innerText = posTxt;
+      document.getElementById('mBpmTitle').innerText = "BPM " + bpm;
+
       var tuneIdx = d <= 360 ? Math.floor((d - 1) / 30) : 12 + Math.floor((d - 361) / 14);
       if (tuneIdx >= standardTunes.length) tuneIdx = standardTunes.length - 1;
       var curTune = standardTunes[tuneIdx];
       var pattern = fallbackPatterns[(d - 1) % fallbackPatterns.length];
 
-      // 4단계 루틴 스텝 아코디언 빌드
       var steps = [
         {
           num: "[1]", name: isEn ? "Daily Core (Stretch & Scale)" : "Daily Core (스트레칭 & 스케일)", time: "45m",
@@ -1058,6 +1202,7 @@
       }
     }
 
+    updateSponsorText();
     render(currentDay);
   </script>
 </body>
