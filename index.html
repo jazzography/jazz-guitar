@@ -2,13 +2,14 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
   <title>1095 Jazz Guitar</title>
   
+  <!-- 카카오톡/SNS 텍스트 전용 심플 프리뷰 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="1095 Jazz Guitar - 3년 완주 재즈기타 루틴">
   <meta property="og:description" content="매일 3시간, 12키와 스케일·보이스리딩·코드멜로디 자동 배정 데일리 연습 엔진">
@@ -18,352 +19,701 @@
   <meta name="apple-mobile-web-app-title" content="1095 Jazz Guitar">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0a0a0c">
   
   <style>
+    :root {
+      --bg-base: #0b0c10;
+      --card-bg: #14161d;
+      --card-border: #232733;
+      --amber-main: #f59e0b;
+      --amber-glow: rgba(245, 158, 11, 0.28);
+      --amber-border: #ea580c;
+      --txt-primary: #f8fafc;
+      --txt-secondary: #94a3b8;
+      --txt-muted: #64748b;
+      --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    }
+
     * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      box-sizing: border-box; margin: 0; padding: 0; 
+      font-family: var(--font-stack);
       -webkit-tap-highlight-color: transparent; 
       touch-action: manipulation;
     }
-    body { background: #0c0e12; color: #f1f5f9; padding-bottom: 140px; font-size: 14.5px; line-height: 1.5; }
-    
-    /* 최상단 컴팩트 라이브 알림 바 */
-    .mini-live-bar {
-      background: #181111; border-bottom: 1px solid #381a1a; padding: 7px 14px;
-      display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;
-    }
-    .mini-live-title { color: #fca5a5; display: flex; align-items: center; gap: 6px; font-weight: 700; }
-    .mini-live-title span { display: inline-block; width: 7px; height: 7px; background: #ef4444; border-radius: 50%; }
-    .mini-live-link { color: #f87171; text-decoration: none; font-weight: 800; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 14px; }
-
-    /* 날짜 탐색 헤더 */
-    .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .day-display { display: flex; align-items: baseline; gap: 6px; }
-    .day-display h2 { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
-    .day-display span { font-size: 12px; color: #64748b; font-weight: 700; }
-    .nav-actions { display: flex; gap: 4px; }
-    .nav-btn {
-      background: #181b22; border: 1px solid #282d37; color: #cbd5e1;
-      padding: 6px 10px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer;
-    }
-    .arrow-btn { font-size: 13px; padding: 6px 12px; }
-
-    /* 복원된 세련된 미니 진척도 바 */
-    .progress-box {
-      background: #14171f; border: 1px solid #232834; border-radius: 10px;
-      padding: 10px 12px; margin-bottom: 12px;
-    }
-    .progress-head {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
-      font-size: 12px; font-weight: 700; color: #94a3b8;
-    }
-    .progress-bar-bg { width: 100%; height: 7px; background: #21262d; border-radius: 4px; overflow: hidden; }
-    .progress-bar-fill {
-      height: 100%; width: 0%; background: linear-gradient(90deg, #d97706, #fbbf24);
-      border-radius: 4px; transition: width 0.3s ease;
-    }
-    .stats-link-btn {
-      background: none; border: none; color: #38bdf8; font-size: 11.5px; font-weight: 800;
-      cursor: pointer; padding: 0;
+    body {
+      background-color: #050507;
+      color: var(--txt-primary);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      font-size: 14.5px;
+      line-height: 1.45;
     }
 
-    /* 오늘의 핵심 요약 카드 */
-    .today-summary-card {
-      background: linear-gradient(135deg, #181d28 0%, #12151c 100%);
-      border: 1px solid #2c3444; border-radius: 12px; padding: 14px; margin-bottom: 14px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .summary-left div:first-child { font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 2px; }
-    .summary-key { font-size: 22px; font-weight: 900; color: #fbbf24; }
-    .summary-right { text-align: right; }
-    .summary-rhythm-badge {
-      display: inline-block; background: #232014; border: 1px solid #78350f;
-      color: #fde047; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 20px;
-    }
-
-    /* 4단계 아코디언 카드 */
-    .routine-step-card {
-      background: #14171f; border: 1px solid #242935; border-radius: 10px;
-      margin-bottom: 8px; overflow: hidden; transition: border-color 0.2s;
-    }
-    .routine-step-card.active { border-color: #3b82f6; }
-    
-    .step-header {
-      padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;
-      cursor: pointer; user-select: none;
-    }
-    .step-title-wrap { display: flex; align-items: center; gap: 8px; }
-    .step-num {
-      width: 20px; height: 20px; border-radius: 5px; background: #1e2638; color: #38bdf8;
-      font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center;
-    }
-    .step-name { font-size: 14px; font-weight: 800; color: #f1f5f9; }
-    .step-time { font-size: 11.5px; color: #64748b; font-weight: 700; margin-right: 6px; }
-    .toggle-icon { font-size: 11px; color: #64748b; transition: transform 0.2s; }
-    .routine-step-card.active .toggle-icon { transform: rotate(180deg); color: #38bdf8; }
-
-    /* 펼쳐지는 세부 내용 */
-    .step-body {
-      display: none; padding: 0 14px 14px 14px; border-top: 1px solid #1a1e28;
-      background: #11131a;
-    }
-    .routine-step-card.active .step-body { display: block; }
-    
-    .task-item {
-      display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
-      border-bottom: 1px dashed #1e2330; font-size: 13.5px; color: #e2e8f0;
-    }
-    .task-item:last-child { border-bottom: none; }
-    .task-item input { width: 17px; height: 17px; margin-top: 2px; accent-color: #f59e0b; cursor: pointer; }
-
-    .video-hint-link {
-      display: inline-block; margin-top: 10px; font-size: 12px; color: #93c5fd;
-      text-decoration: none; font-weight: 700;
-    }
-
-    /* 개인 연습 & 완주 버튼 */
-    .personal-box {
-      background: #12141a; border: 1px solid #202430; border-radius: 10px;
-      padding: 12px 14px; margin: 12px 0;
-    }
-    .personal-head { font-size: 12.5px; font-weight: 800; color: #c084fc; margin-bottom: 6px; }
-    .memo-input {
-      width: 100%; background: #0a0b0e; border: 1px solid #232733; color: #fff;
-      border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.4;
-    }
-
-    .done-btn {
-      width: 100%; background: #22c55e; color: #000; border: none; font-weight: 900;
-      font-size: 15px; padding: 14px; border-radius: 9px; cursor: pointer;
-    }
-    .done-btn.completed { background: #166534; color: #86efac; }
-
-    /* 프리미엄 커피 후원 배너 카드 */
-    .sponsor-banner-card {
-      margin-top: 20px;
-      background: linear-gradient(145deg, #181920 0%, #111217 100%);
-      border: 1px solid #332d25;
-      border-radius: 14px;
-      padding: 18px 16px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    /* 모바일 앱 뷰포트 컨테이너 (데스크톱에서는 아이폰 프레임화) */
+    .app-viewport {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
       position: relative;
+      box-shadow: 0 0 50px rgba(0,0,0,0.85);
+      border-left: 1px solid #181b24;
+      border-right: 1px solid #181b24;
+      padding-bottom: 96px; /* 하단 탭바 여백 */
+    }
+
+    /* iOS 네이티브 헤더 */
+    .app-header {
+      padding: 16px 20px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 12, 16, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .header-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      color: #fff;
+    }
+    .lang-pill-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .lang-pill-btn:active { transform: scale(0.95); }
+
+    /* 메인 스크롤 콘텐츠 */
+    .app-content {
+      padding: 12px 18px 20px;
+      flex: 1;
+    }
+
+    /* 상단 D-Day 가로 셀렉터 바 */
+    .day-selector-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 6px 0 16px;
+      font-size: 13.5px;
+      font-weight: 800;
+      user-select: none;
+    }
+    .sub-day-btn {
+      color: var(--txt-muted);
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: color 0.15s;
+    }
+    .sub-day-btn:active { color: #fff; }
+    .current-day-badge {
+      background: #171618;
+      border: 1.5px solid var(--amber-main);
+      color: #fff;
+      padding: 5px 18px;
+      border-radius: 9px;
+      font-size: 16.5px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+    }
+    .day-arrow {
+      color: var(--txt-muted);
+      cursor: pointer;
+      font-size: 11px;
+      padding: 6px 8px;
+    }
+
+    /* ★ 이미지 속 시그니처: TODAY'S MISSION 앰버 오렌지 네온 카드 ★ */
+    .mission-card {
+      background: linear-gradient(180deg, #181412 0%, #121010 100%);
+      border: 2px solid var(--amber-border);
+      border-radius: 18px;
+      padding: 18px 18px 14px;
+      margin-bottom: 22px;
+      position: relative;
+      box-shadow: 0 0 28px var(--amber-glow), inset 0 0 16px rgba(245, 158, 11, 0.08);
+    }
+    .mission-badge-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fbbf24;
+      margin-bottom: 14px;
+      letter-spacing: -0.2px;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mission-item-left {
+      border-right: 1px solid rgba(245, 158, 11, 0.2);
+      padding-right: 10px;
+    }
+    .mission-key-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+    .mission-rhythm-sub {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fde047;
+      margin-top: 5px;
+    }
+    .mission-pos-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #f1f5f9;
+      line-height: 1.3;
+    }
+    .mission-bpm-sub {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--txt-secondary);
+      margin-top: 5px;
+    }
+
+    /* 미션 카드 내부 프로그레스 바 */
+    .mission-progress-wrap {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
+    }
+    .mission-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--txt-secondary);
+      margin-bottom: 6px;
+    }
+    .mission-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #252326;
+      border-radius: 3px;
       overflow: hidden;
     }
-    .sponsor-banner-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
-    }
-    .sponsor-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);
-      color: #fde047; font-size: 11.5px; font-weight: 800;
-      padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
-    }
-    .sponsor-title {
-      font-size: 15.5px; font-weight: 900; color: #f8fafc; margin-bottom: 6px; letter-spacing: -0.3px;
-    }
-    .sponsor-desc {
-      font-size: 12.5px; color: #94a3b8; line-height: 1.55; margin-bottom: 14px; word-break: keep-all;
-    }
-    .sponsor-actions {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    }
-    .sponsor-btn {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 11px 12px; border-radius: 9px; text-decoration: none;
-      font-size: 13px; font-weight: 800; transition: transform 0.15s, opacity 0.2s;
-    }
-    .sponsor-btn:active { transform: scale(0.97); }
-    .sponsor-btn-kakao {
-      background: #fee500; color: #191919;
-      box-shadow: 0 2px 10px rgba(254, 229, 0, 0.2);
-    }
-    .sponsor-btn-kofi {
-      background: #ff5e5b; color: #ffffff;
-      box-shadow: 0 2px 10px rgba(255, 94, 91, 0.25);
-    }
-    .sponsor-footer-tip {
-      font-size: 11px; color: #64748b; margin-top: 10px;
+    .mission-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #d97706, #fbbf24);
+      border-radius: 3px;
+      transition: width 0.3s ease;
     }
 
-    /* 하단 메트로놈 닥 */
-    .metro-dock {
-      position: fixed; bottom: 0; left: 0; right: 0; background: #10131a;
-      border-top: 1px solid #242935; padding: 10px 16px; z-index: 99;
-      display: flex; justify-content: center;
+    /* 루틴 스텝 섹션 헤더 */
+    .sec-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
     }
-    .metro-inner { width: 100%; max-width: 480px; display: flex; align-items: center; justify-content: space-between; }
-    .bpm-ctrl { display: flex; align-items: center; gap: 6px; }
-    .bpm-ctrl button {
-      background: #1a1e28; border: 1px solid #2b3140; color: #fff;
-      width: 34px; height: 34px; border-radius: 6px; font-weight: 900; cursor: pointer;
+    .sec-label {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--txt-muted);
+      letter-spacing: 0.8px;
     }
-    .bpm-val { font-size: 18px; font-weight: 900; min-width: 55px; text-align: center; }
-    .play-btn {
-      background: #f59e0b; color: #000; border: none; font-weight: 900;
-      padding: 0 18px; height: 36px; border-radius: 6px; font-size: 13.5px; cursor: pointer;
-    }
-    .play-btn.on { background: #ef4444; color: #fff; }
 
-    /* 모달 */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
-    .modal-box { background: #14171f; border: 1px solid #334155; border-radius: 12px; padding: 20px; max-width: 420px; width: 100%; }
+    /* 아코디언 스텝 카드 */
+    .routine-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .step-card {
+      background: #14161c;
+      border: 1px solid #232733;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .step-card.active {
+      border-color: rgba(245, 158, 11, 0.5);
+      background: #161820;
+    }
+    .step-head {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .step-head:active { opacity: 0.8; }
+    .step-head-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #f1f5f9;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .step-head-num {
+      color: #fbbf24;
+      font-weight: 900;
+    }
+    .step-head-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--txt-muted);
+      flex-shrink: 0;
+    }
+    .step-body {
+      display: none;
+      padding: 4px 16px 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: #0f1116;
+    }
+    .step-card.active .step-body { display: block; }
     
-    /* 통계 모달 스타일 */
-    .year-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
-    .year-item { background: #1c212c; border: 1px solid #282d37; border-radius: 8px; padding: 10px; text-align: center; }
-    .year-item div:first-child { font-size: 11px; color: #94a3b8; }
-    .year-item div:last-child { font-size: 13px; font-weight: 800; color: #facc15; margin-top: 4px; }
-    .grass-matrix { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 8px; }
-    .grass-cell { aspect-ratio: 1; border-radius: 3px; background: #21262d; }
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px dashed #202430;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+    .task-row:last-child { border-bottom: none; }
+    .task-row input {
+      width: 17px; height: 17px;
+      margin-top: 2px;
+      accent-color: var(--amber-main);
+      cursor: pointer;
+    }
+    .video-sub-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* 완주 버튼 (이미지 형태) */
+    .complete-action-btn {
+      width: 100%;
+      background: linear-gradient(180deg, #2a221b 0%, #1e1713 100%);
+      border: 1px solid #6b411d;
+      color: #fde047;
+      font-weight: 900;
+      font-size: 15.5px;
+      padding: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      transition: all 0.15s;
+    }
+    .complete-action-btn:active {
+      transform: scale(0.97);
+    }
+    .complete-action-btn.is-completed {
+      background: linear-gradient(180deg, #144026 0%, #0d2c1a 100%);
+      border-color: #22c55e;
+      color: #86efac;
+    }
+
+    /* 커피 후원 심플 필 버튼 (이미지 형태) */
+    .coffee-pill-btn {
+      width: 100%;
+      background: #14151b;
+      border: 1px solid #282a36;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      color: #cbd5e1;
+      transition: all 0.15s;
+      margin-bottom: 16px;
+    }
+    .coffee-pill-btn:active { transform: scale(0.98); background: #1a1c24; }
+
+    /* ★ 하단 고정 5개 네비게이션 탭바 (Glassmorphism) ★ */
+    .bottom-tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 440px;
+      height: 74px;
+      background: rgba(15, 17, 23, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom, 8px);
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #71717a;
+      text-decoration: none;
+      font-size: 10.5px;
+      font-weight: 700;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .tab-item:active { transform: scale(0.92); }
+    .tab-item.active {
+      color: #fbbf24;
+    }
+    .tab-icon {
+      font-size: 18px;
+    }
+
+    /* ★ 3번째 화면: 바텀 시트 (Bottom Sheet) 모달 ★ */
+    .sheet-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .sheet-overlay.open {
+      display: flex;
+    }
+    .bottom-sheet-card {
+      width: 100%;
+      max-width: 440px;
+      background: #181920;
+      border-top: 1px solid #323544;
+      border-radius: 20px 20px 0 0;
+      padding: 12px 20px 34px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .drag-handle {
+      width: 42px;
+      height: 4.5px;
+      background: #3f4254;
+      border-radius: 3px;
+      margin: 0 auto 14px;
+    }
+    .sheet-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #f8fafc;
+      text-align: center;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .sheet-list-box {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .sheet-row-btn {
+      width: 100%;
+      background: #111217;
+      border: 1px solid #222530;
+      color: #f1f5f9;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sheet-row-btn:active { background: #1d202b; }
+    .sheet-row-btn.is-current { border-color: var(--amber-main); color: #fde047; }
+    
+    .sheet-direct-row {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #262936;
+      padding-top: 12px;
+      align-items: center;
+    }
+    .sheet-input {
+      flex: 1;
+      background: #0f1015;
+      border: 1px solid #333748;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .sheet-jump-btn {
+      background: var(--amber-main);
+      color: #000;
+      border: none;
+      font-weight: 900;
+      padding: 0 18px;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* 일반 팝업 모달 */
+    .simple-modal-box {
+      background: #181922;
+      border: 1px solid #323544;
+      border-radius: 16px;
+      padding: 22px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+    }
+
+    /* 통계 잔디 매트릭스 */
+    .grass-matrix {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 4px;
+      margin: 12px 0;
+    }
+    .grass-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: #212530;
+    }
     .grass-cell.done { background: #22c55e; }
-    .grass-cell.current { border: 1px solid #facc15; }
+    .grass-cell.current { border: 1.5px solid #fbbf24; }
   </style>
 </head>
 <body>
 
-  <!-- 미니멀 1줄 라이브 배너 -->
-  <div class="mini-live-bar">
-    <div class="mini-live-title"><span></span> [월 9pm] 프로반 라이브</div>
-    <a href="https://www.youtube.com/channel/UCI8PtsibK2wGkrvaKUdW0kg/join" target="_blank" rel="noopener" class="mini-live-link">
-      참여하기 →
-    </a>
-  </div>
-
-  <div class="container">
+  <div class="app-viewport">
     
-    <!-- 상단 날짜 및 빠른 이동 네비게이션 -->
-    <div class="nav-bar">
-      <div class="day-display">
-        <h2 id="dayTitle">DAY 1</h2>
-        <span>/ 1095</span>
+    <!-- 네이티브 앱 상단 헤더 -->
+    <header class="app-header">
+      <div class="header-logo">1095 Jazz Guitar</div>
+      <button onclick="toggleLang()" class="lang-pill-btn" id="langBtnTxt">
+        <span>🌐</span> <span id="curLangCode">EN</span>
+      </button>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="app-content">
+      
+      <!-- 상단 D-Day 가로 휠 셀렉터 -->
+      <div class="day-selector-bar">
+        <span class="sub-day-btn" onclick="moveDay(-2)" id="prev2DayTxt">[ D-1 ]</span>
+        <span class="sub-day-btn" onclick="moveDay(-1)" id="prev1DayTxt">[ D-2 ]</span>
+        <span class="day-arrow" onclick="moveDay(-1)">▶</span>
+        <div class="current-day-badge" id="curDayBadge" onclick="openJumpSheet()">D-3</div>
+        <span class="day-arrow" onclick="moveDay(1)">◀</span>
+        <span class="sub-day-btn" onclick="moveDay(1)" id="next1DayTxt">[ D-4 ]</span>
       </div>
-      <div class="nav-actions">
-        <button onclick="openIndexModal()" class="nav-btn" id="indexBtnTxt">🔍 주제</button>
-        <button onclick="toggleLang()" class="nav-btn" id="langToggleBtn">EN</button>
-        <button onclick="moveDay(-1)" class="nav-btn arrow-btn">◀</button>
-        <button onclick="moveDay(1)" class="nav-btn arrow-btn">▶</button>
+
+      <!-- ★ TODAY'S MISSION 앰버 네온 카드 ★ -->
+      <div class="mission-card">
+        <div class="mission-badge-head">
+          <span>🎸</span> <span id="missionHeading">TODAY'S MISSION (Year 1)</span>
+        </div>
+        
+        <div class="mission-grid">
+          <div class="mission-item-left">
+            <div class="mission-key-title" id="mKeyTitle">C Major</div>
+            <div class="mission-rhythm-sub" id="mRhythmTitle">16분음표 ♩</div>
+          </div>
+          <div class="mission-item-right">
+            <div class="mission-pos-title" id="mPosTitle">Pos 3 (CAGED)</div>
+            <div class="mission-bpm-sub" id="mBpmTitle">BPM 85</div>
+          </div>
+        </div>
+
+        <div class="mission-progress-wrap">
+          <div class="mission-progress-meta">
+            <span>진척도 <strong id="mDoneCount" style="color:#fff;">0</strong> / 1095일</span>
+            <span id="mDonePct">0.0%</span>
+          </div>
+          <div class="mission-bar-bg">
+            <div class="mission-bar-fill" id="mProgressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROUTINE STEPS 목록 -->
+      <div class="sec-header-row">
+        <div class="sec-label" id="routineSecLabel">ROUTINE STEPS</div>
+      </div>
+
+      <div class="routine-accordion" id="accordionBox"></div>
+
+      <!-- 오늘 3시간 루틴 완주하기 버튼 -->
+      <button class="complete-action-btn" id="finishBtn" onclick="toggleComplete()">
+        <span>✓</span> <span id="finishBtnTxt">오늘 3시간 루틴 완주하기</span>
+      </button>
+
+      <!-- 커피 후원 버튼 -->
+      <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="coffee-pill-btn" id="coffeePill">
+        <span>☕</span> <span>Buy JunKim a Coffee (카카오페이 / Ko-fi)</span>
+      </a>
+
+    </main>
+
+    <!-- ★ 하단 고정 5개 네비게이션 탭바 ★ -->
+    <nav class="bottom-tab-bar">
+      <div class="tab-item active" onclick="switchTab('routine')">
+        <span class="tab-icon">🏠</span>
+        <span id="tab1Txt">오늘루틴</span>
+      </div>
+      <div class="tab-item" onclick="switchTab('fretboard')">
+        <span class="tab-icon">🎸</span>
+        <span id="tab2Txt">지판뷰어</span>
+      </div>
+      <div class="tab-item" onclick="switchTab('metro')">
+        <span class="tab-icon">⏱️</span>
+        <span id="tab3Txt">메트로놈</span>
+      </div>
+      <div class="tab-item" onclick="switchTab('stats')">
+        <span class="tab-icon">📊</span>
+        <span id="tab4Txt">완주통계</span>
+      </div>
+      <div class="tab-item" onclick="switchTab('settings')">
+        <span class="tab-icon">⚙️</span>
+        <span id="tab5Txt">설정</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- ★ 3번째 화면: 바텀 시트 (곡/주제 숏컷 이동) ★ -->
+  <div class="sheet-overlay" id="jumpSheet" onclick="closeJumpSheet(event)">
+    <div class="bottom-sheet-card" onclick="event.stopPropagation()">
+      <div class="drag-handle"></div>
+      <div class="sheet-title">🎯 <span id="sheetHeadTitle">연습 곡 / 주제 선택</span></div>
+      
+      <div class="sheet-list-box" id="sheetListItems"></div>
+
+      <div class="sheet-direct-row">
+        <input type="number" id="sheetDayInput" class="sheet-input" min="1" max="1095" placeholder="Day 직접 입력: ( 42 )">
+        <button class="sheet-jump-btn" onclick="directJumpFromSheet()" id="sheetMoveBtn">이동</button>
       </div>
     </div>
+  </div>
 
-    <!-- 복원된 슬림 진척도 카드 -->
-    <div class="progress-box">
-      <div class="progress-head">
-        <span>🏆 3년 진척도: <strong id="progressDoneText" style="color:#facc15;">0</strong> / 1095일 (<span id="progressActualPct">0.0%</span>)</span>
-        <button onclick="openStatsModal()" class="stats-link-btn" id="statsBtnText">📊 분석</button>
+  <!-- 메트로놈 바텀 시트 팝업 -->
+  <div class="sheet-overlay" id="metroSheet" onclick="closeMetroSheet(event)">
+    <div class="bottom-sheet-card" onclick="event.stopPropagation()" style="text-align:center;">
+      <div class="drag-handle"></div>
+      <div class="sheet-title">⏱️ Web Audio 메트로놈</div>
+      <div style="font-size:46px; font-weight:900; color:#fbbf24; margin:10px 0;"><span id="bpmDisplay">85</span> <span style="font-size:14px; color:#94a3b8;">BPM</span></div>
+      <div style="display:flex; justify-content:center; gap:8px; margin-bottom:20px;">
+        <button onclick="stepBpm(-5)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:16px;">-5</button>
+        <button onclick="stepBpm(-1)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:18px;">-</button>
+        <button onclick="stepBpm(1)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:18px;">+</button>
+        <button onclick="stepBpm(5)" style="background:#222530; border:none; color:#fff; width:44px; height:44px; border-radius:8px; font-weight:bold; font-size:16px;">+5</button>
       </div>
-      <div class="progress-bar-bg">
-        <div id="progressBarFill" class="progress-bar-fill"></div>
-      </div>
+      <button id="metroPlayBtn" onclick="toggleMetro()" style="width:100%; background:#f59e0b; color:#000; border:none; font-weight:900; padding:15px; border-radius:10px; font-size:16px; cursor:pointer;">▶ START</button>
     </div>
+  </div>
 
-    <!-- 오늘의 요약 카드 (Key & 리듬 한눈에 보기) -->
-    <div class="today-summary-card">
-      <div class="summary-left">
-        <div id="txtTodayKeyLabel">TODAY'S KEY</div>
-        <div class="summary-key" id="summaryKeyText">C Major</div>
+  <!-- 통계 바텀 시트 -->
+  <div class="sheet-overlay" id="statsSheet" onclick="closeStatsSheet(event)">
+    <div class="bottom-sheet-card" onclick="event.stopPropagation()">
+      <div class="drag-handle"></div>
+      <div class="sheet-title">📊 3년 완주 스트릭 & 잔디</div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; text-align:center;">
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">1년차</div><div id="stY1" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">2년차</div><div id="stY2" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
+        <div style="background:#111217; padding:10px; border-radius:8px; border:1px solid #232733;"><div style="font-size:11px; color:#888;">3년차</div><div id="stY3" style="color:#fbbf24; font-weight:bold; margin-top:4px;">0/365</div></div>
       </div>
-      <div class="summary-right">
-        <div class="summary-rhythm-badge" id="summaryRhythmText">4분음표</div>
-      </div>
+      <div style="font-size:12px; color:#94a3b8; font-weight:bold; margin-bottom:6px;">최근 30일 루틴 달성 잔디:</div>
+      <div class="grass-matrix" id="grassGrid"></div>
+      <button onclick="closeStatsSheet()" style="width:100%; background:#222530; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; margin-top:10px; cursor:pointer;">닫기</button>
     </div>
+  </div>
 
-    <!-- 4단계 연습 섹션 (아코디언 UI) -->
-    <div id="routineAccordion"></div>
-
-    <!-- 개인 연습 메모 -->
-    <div class="personal-box">
-      <div class="personal-head" id="personalTitle">★ 개인 연습 과제 & 레슨 노트</div>
-      <textarea id="memoBox" class="memo-input" rows="2" placeholder="교재 페이지, 과제 곡, 레슨 메모 입력" oninput="saveMemo()"></textarea>
-    </div>
-
-    <!-- 완주 체크 버튼 -->
-    <button id="completeBtn" class="done-btn" onclick="toggleComplete()">오늘 3시간 완주 체크 완료</button>
-
-    <!-- Harmony Buster 감성의 프리미엄 후원 배너 -->
-    <div class="sponsor-banner-card">
-      <div class="sponsor-badge" id="sponsorBadge">☕ Buy JunKim a Coffee</div>
-      <div class="sponsor-title" id="sponsorTitle">준킴 코치에게 커피 한 잔으로 응원하기</div>
-      <div class="sponsor-desc" id="sponsorDesc">
-        매일 3시간, 묵묵히 12키의 벽을 넘어서는 여러분의 든든한 페이스메이커가 되어 드립니다. 이 루틴이 연습에 작은 영감이 되었다면 따뜻한 커피 한 잔을 선물해 주세요!
-      </div>
-      <div class="sponsor-actions">
-        <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="sponsor-btn sponsor-btn-kakao">
-          <span>💛</span> <span id="btnKakaoTxt">카카오페이 송금</span>
+  <!-- 설정 바텀 시트 -->
+  <div class="sheet-overlay" id="settingsSheet" onclick="closeSettingsSheet(event)">
+    <div class="bottom-sheet-card" onclick="event.stopPropagation()">
+      <div class="drag-handle"></div>
+      <div class="sheet-title">⚙️ 앱 환경설정</div>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+        <button onclick="toggleLang(); closeSettingsSheet();" class="sheet-row-btn">
+          <span>🌐 언어 변경 (Language Toggle)</span>
+          <span style="color:#fbbf24;" id="setLangTxt">한국어 / English</span>
+        </button>
+        <a href="https://qr.kakaopay.com/FMnnbr8OU" target="_blank" rel="noopener" class="sheet-row-btn" style="text-decoration:none;">
+          <span>💛 카카오페이 커피 후원</span>
+          <span>열기 ↗</span>
         </a>
-        <a href="https://ko-fi.com/junkimmusic" target="_blank" rel="noopener" class="sponsor-btn sponsor-btn-kofi">
-          <span>☕</span> <span>Ko-fi (Global)</span>
+        <a href="https://ko-fi.com/junkimmusic" target="_blank" rel="noopener" class="sheet-row-btn" style="text-decoration:none;">
+          <span>☕ Ko-fi 글로벌 도네이션</span>
+          <span>열기 ↗</span>
         </a>
       </div>
-      <div class="sponsor-footer-tip" id="sponsorTip">따뜻한 응원은 더 좋은 음악 콘텐츠와 앱 개발의 큰 힘이 됩니다 🙏</div>
-    </div>
-
-  </div>
-
-  <!-- 메트로놈 바 -->
-  <div class="metro-dock">
-    <div class="metro-inner">
-      <div class="bpm-ctrl">
-        <button onclick="stepBpm(-5)">-5</button>
-        <button onclick="stepBpm(-1)">-</button>
-        <div class="bpm-val"><span id="bpmTxt">85</span><div style="font-size:9px; color:#64748b;">BPM</div></div>
-        <button onclick="stepBpm(1)">+</button>
-        <button onclick="stepBpm(5)">+5</button>
-      </div>
-      <button id="playBtn" class="play-btn" onclick="toggleMetro()">▶ START</button>
-    </div>
-  </div>
-
-  <!-- 통계 및 잔디 모달 (복원) -->
-  <div class="modal" id="statsModal">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <div style="font-size:15px; font-weight:800; color:#38bdf8;" id="statsModalTitle">📊 1095 완주 성취도 분석</div>
-        <button onclick="closeStatsModal()" style="background:none; border:none; color:#94a3b8; font-size:18px; cursor:pointer;">✕</button>
-      </div>
-      <div class="year-grid">
-        <div class="year-item"><div id="statY1Label">1년 차 (기초)</div><div id="y1Stats">0 / 365</div></div>
-        <div class="year-item"><div id="statY2Label">2년 차 (심화)</div><div id="y2Stats">0 / 365</div></div>
-        <div class="year-item"><div id="statY3Label">3년 차 (마스터)</div><div id="y3Stats">0 / 365</div></div>
-      </div>
-      <div style="font-size:12.5px; font-weight:700; color:#cbd5e1; margin-bottom:6px;" id="statsGrassLabel">최근 30일 완주 현황 (초록: 완료)</div>
-      <div id="grassGrid" class="grass-matrix"></div>
-      <div style="margin-top:16px; text-align:center;">
-        <button onclick="closeStatsModal()" style="background:#21262d; border:1px solid #444; color:#fff; padding:7px 20px; border-radius:6px; font-size:12.5px; cursor:pointer;">닫기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 인덱스 모달 -->
-  <div class="modal" id="indexModal">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <div style="font-size:15px; font-weight:800; color:#c084fc;">🔍 주제 및 곡 바로가기</div>
-        <button onclick="closeIndexModal()" style="background:none; border:none; color:#94a3b8; font-size:16px; cursor:pointer;">✕</button>
-      </div>
-      <select id="tuneJumpSelect" onchange="jumpToSelectedTune(this.value)" style="width:100%; background:#0b0d12; border:1px solid #3b82f6; color:#fde047; padding:9px; border-radius:6px; font-weight:bold; margin-bottom:12px;"></select>
-      <div style="display:flex; gap:6px;">
-        <input type="number" id="directDayInput" min="1" max="1095" placeholder="Day 직접 입력 (1~1095)" style="flex:1; background:#0b0d12; border:1px solid #282d37; color:#fff; padding:8px; border-radius:6px; font-size:13px;">
-        <button onclick="jumpDirectDay()" style="background:#3b82f6; border:none; color:#fff; font-weight:bold; padding:8px 16px; border-radius:6px; cursor:pointer;">이동</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 완료 축하 모달 -->
-  <div class="modal" id="praiseModal">
-    <div class="modal-box" style="text-align:center;">
-      <div style="font-size:26px;">🎸</div>
-      <h3 style="margin-top:6px; font-size:17px;">오늘의 세션 완료!</h3>
-      <p id="praiseQuote" style="margin:14px 0; font-size:14px; color:#fde047; font-weight:600; line-height:1.5;"></p>
-      <button onclick="closeModal()" style="background:#22c55e; color:#000; font-weight:800; border:none; padding:8px 24px; border-radius:6px; cursor:pointer;">확인</button>
+      <button onclick="closeSettingsSheet()" style="width:100%; background:#222530; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">닫기</button>
     </div>
   </div>
 
@@ -408,8 +758,8 @@
     }
 
     var currentLang = safeGet('jazz_lang', 'ko');
-    var rawDay = parseInt(safeGet('jazz_day', '1'), 10);
-    var currentDay = (!isNaN(rawDay) && rawDay >= 1 && rawDay <= 1095) ? rawDay : 1;
+    var rawDay = parseInt(safeGet('jazz_day', '3'), 10);
+    var currentDay = (!isNaN(rawDay) && rawDay >= 1 && rawDay <= 1095) ? rawDay : 3;
     var activeStepIdx = 0;
 
     function getTuneStartDay(i) {
@@ -419,9 +769,9 @@
 
     function getTodayRhythm(d) {
       var isEn = (currentLang === 'en');
-      var r4 = isEn ? "Quarter Notes" : "4분음표";
-      var r8 = isEn ? "8th Notes" : "8분음표";
-      var r16 = isEn ? "16th Notes" : "16분음표";
+      var r4 = isEn ? "Quarter Note ♩" : "4분음표 ♩";
+      var r8 = isEn ? "8th Note ♪" : "8분음표 ♪";
+      var r16 = isEn ? "16th Note ♬" : "16분음표 ♬";
       var r3trip = isEn ? "Triplets" : "3잇단음표";
       var r6trip = isEn ? "Sextuplets" : "6잇단음표";
       var r32 = isEn ? "32nd / Sync" : "32분음표/변형";
@@ -442,117 +792,15 @@
       try { return JSON.parse(safeGet('jazz_completed_map', '{}')) || {}; } catch(e) { return {}; }
     }
 
-    function updateProgressUI() {
-      var map = getCompletedMap();
-      var doneCount = Object.keys(map).length;
-      var pct = ((doneCount / 1095) * 100).toFixed(1);
-      
-      document.getElementById('progressDoneText').innerText = doneCount;
-      document.getElementById('progressActualPct').innerText = pct + '%';
-      document.getElementById('progressBarFill').style.width = Math.max(1, pct) + '%';
-    }
-
     function toggleStep(idx) {
       activeStepIdx = (activeStepIdx === idx) ? -1 : idx;
       render(currentDay);
     }
 
-    function updateSponsorUI() {
-      var isKo = (currentLang === 'ko');
-      document.getElementById('sponsorBadge').innerText = isKo ? "☕ Buy JunKim a Coffee" : "☕ Support Coach Jun Kim";
-      document.getElementById('sponsorTitle').innerText = isKo ? "준킴 코치에게 커피 한 잔으로 응원하기" : "Support JunKim with a Coffee";
-      document.getElementById('sponsorDesc').innerText = isKo 
-        ? "매일 3시간, 묵묵히 12키의 벽을 넘어서는 여러분의 든든한 페이스메이커가 되어 드립니다. 이 루틴이 연습에 작은 영감이 되었다면 따뜻한 커피 한 잔을 선물해 주세요!"
-        : "Practicing 3 hours daily across all 12 keys is a tough journey. If this routine inspires your practice, consider buying Coach JunKim a warm cup of coffee!";
-      document.getElementById('btnKakaoTxt').innerText = isKo ? "카카오페이 송금" : "KakaoPay";
-      document.getElementById('sponsorTip').innerText = isKo 
-        ? "따뜻한 응원은 더 좋은 음악 콘텐츠와 앱 개발의 큰 힘이 됩니다 🙏"
-        : "Your warm support fuels more high-quality music content and tool improvements 🙏";
-      document.getElementById('statsBtnText').innerText = isKo ? "📊 분석" : "📊 Stats";
-    }
-
     function toggleLang() {
       currentLang = (currentLang === 'ko') ? 'en' : 'ko';
       safeSave('jazz_lang', currentLang);
-      document.getElementById('langToggleBtn').innerText = (currentLang === 'ko') ? 'EN' : 'KO';
-      updateSponsorUI();
-      populateTuneSelect();
-      render(currentDay);
-    }
-
-    function openIndexModal() { populateTuneSelect(); document.getElementById('indexModal').style.display = 'flex'; }
-    function closeIndexModal() { document.getElementById('indexModal').style.display = 'none'; }
-    function closeModal() { document.getElementById('praiseModal').style.display = 'none'; }
-
-    function openStatsModal() {
-      var map = getCompletedMap();
-      var y1 = 0, y2 = 0, y3 = 0;
-      for (var k in map) {
-        var dayNum = parseInt(k, 10);
-        if (dayNum <= 365) y1++;
-        else if (dayNum <= 730) y2++;
-        else if (dayNum <= 1095) y3++;
-      }
-      document.getElementById('y1Stats').innerText = y1 + ' / 365 (' + ((y1/365)*100).toFixed(0) + '%)';
-      document.getElementById('y2Stats').innerText = y2 + ' / 365 (' + ((y2/365)*100).toFixed(0) + '%)';
-      document.getElementById('y3Stats').innerText = y3 + ' / 365 (' + ((y3/365)*100).toFixed(0) + '%)';
-
-      var start = Math.max(1, currentDay - 15);
-      var end = Math.min(1095, start + 29);
-      var html = '';
-      for (var i = start; i <= end; i++) {
-        var isDone = map[i] ? 'done' : '';
-        var isCur = (i === currentDay) ? 'current' : '';
-        html += '<div class="grass-cell ' + isDone + ' ' + isCur + '" title="Day ' + i + '"></div>';
-      }
-      document.getElementById('grassGrid').innerHTML = html;
-      document.getElementById('statsModal').style.display = 'flex';
-    }
-    function closeStatsModal() { document.getElementById('statsModal').style.display = 'none'; }
-
-    function jumpToDay(targetDay) {
-      currentDay = Math.max(1, Math.min(1095, targetDay));
-      safeSave('jazz_day', currentDay);
-      closeIndexModal();
-      render(currentDay);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function jumpDirectDay() {
-      var val = parseInt(document.getElementById('directDayInput').value, 10);
-      if (!isNaN(val) && val >= 1 && val <= 1095) jumpToDay(val);
-    }
-
-    function jumpToSelectedTune(startDay) { if (startDay) jumpToDay(parseInt(startDay, 10)); }
-
-    function populateTuneSelect() {
-      var select = document.getElementById('tuneJumpSelect');
-      if (!select) return;
-      var curTuneIdx = currentDay <= 360 ? Math.floor((currentDay - 1) / 30) : 12 + Math.floor((currentDay - 361) / 14);
-      if (curTuneIdx >= standardTunes.length) curTuneIdx = standardTunes.length - 1;
-
-      var html = '<option value="">' + (currentLang === 'en' ? '▼ Select Tune Shortcut...' : '▼ 곡 바로가기 선택...') + '</option>';
-      for (var i = 0; i < standardTunes.length; i++) {
-        var startDay = getTuneStartDay(i);
-        var isCurrent = (i === curTuneIdx) ? ' (현재 학습 중)' : '';
-        html += '<option value="' + startDay + '">#' + (i + 1) + ' ' + standardTunes[i] + ' [D-' + startDay + ']' + isCurrent + '</option>';
-      }
-      select.innerHTML = html;
-    }
-
-    function saveMemo() { safeSave('jazz_memo_' + currentDay, document.getElementById('memoBox').value); }
-
-    function toggleComplete() {
-      var map = getCompletedMap();
-      if (map[currentDay]) {
-        delete map[currentDay];
-        safeSave('jazz_completed_map', JSON.stringify(map));
-      } else {
-        map[currentDay] = true;
-        safeSave('jazz_completed_map', JSON.stringify(map));
-        document.getElementById('praiseQuote').innerText = '"루틴을 묵묵히 통과한 연주자만이 무대 위에서 완전한 자유를 누립니다."';
-        document.getElementById('praiseModal').style.display = 'flex';
-      }
+      document.getElementById('curLangCode').innerText = (currentLang === 'ko') ? 'EN' : 'KO';
       render(currentDay);
     }
 
@@ -562,121 +810,213 @@
       render(currentDay);
     }
 
-    function render(d) {
-      document.getElementById('dayTitle').innerText = 'DAY ' + d;
-      document.getElementById('memoBox').value = safeGet('jazz_memo_' + d, '');
+    function jumpToDay(d) {
+      currentDay = Math.max(1, Math.min(1095, d));
+      safeSave('jazz_day', currentDay);
+      closeJumpSheet();
+      render(currentDay);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
+    function directJumpFromSheet() {
+      var val = parseInt(document.getElementById('sheetDayInput').value, 10);
+      if (!isNaN(val) && val >= 1 && val <= 1095) jumpToDay(val);
+    }
+
+    function toggleComplete() {
       var map = getCompletedMap();
-      var btn = document.getElementById('completeBtn');
-      if (map[d]) {
-        btn.innerText = '✓ Day ' + d + ' 완주 완료됨 (취소하려면 클릭)';
-        btn.classList.add('completed');
+      if (map[currentDay]) {
+        delete map[currentDay];
+        safeSave('jazz_completed_map', JSON.stringify(map));
       } else {
-        btn.innerText = '오늘 3시간 완주 체크 완료';
-        btn.classList.remove('completed');
+        map[currentDay] = true;
+        safeSave('jazz_completed_map', JSON.stringify(map));
       }
+      render(currentDay);
+    }
 
-      updateProgressUI();
+    /* 바텀 시트 열기/닫기 */
+    function openJumpSheet() {
+      buildSheetList();
+      document.getElementById('jumpSheet').classList.add('open');
+    }
+    function closeJumpSheet() { document.getElementById('jumpSheet').classList.remove('open'); }
+    function closeMetroSheet() { document.getElementById('metroSheet').classList.remove('open'); }
+    function closeStatsSheet() { document.getElementById('statsSheet').classList.remove('open'); }
+    function closeSettingsSheet() { document.getElementById('settingsSheet').classList.remove('open'); }
 
-      if (d % 7 === 0) {
-        document.getElementById('summaryKeyText').innerText = "REST & JAM";
-        document.getElementById('summaryRhythmText').innerText = "자율 세션";
-        document.getElementById('routineAccordion').innerHTML = 
-          '<div class="routine-step-card active">' +
-            '<div class="step-header"><div class="step-title-wrap"><span class="step-num">☕</span><span class="step-name">FREE JAM & REVIEW</span></div></div>' +
-            '<div class="step-body" style="display:block;">' +
-              '<div class="task-item"><input type="checkbox"><div>손과 어깨 스트레칭 & 크로매틱 (15m)</div></div>' +
-              '<div class="task-item"><input type="checkbox"><div>이번 주 6개 키 중 뻑뻑했던 포지션 복습</div></div>' +
-              '<div class="task-item"><input type="checkbox"><div>백킹트랙 위에서 자유 즉흥연주 (Free Jam)</div></div>' +
-              '<a href="' + JOIN_URL + '" target="_blank" rel="noopener" class="video-hint-link">💬 [일 10pm] 라이브 Q&A 참여하기 →</a>' +
-            '</div>' +
-          '</div>';
-        return;
+    function buildSheetList() {
+      var container = document.getElementById('sheetListItems');
+      var curTuneIdx = currentDay <= 360 ? Math.floor((currentDay - 1) / 30) : 12 + Math.floor((currentDay - 361) / 14);
+      if (curTuneIdx >= standardTunes.length) curTuneIdx = standardTunes.length - 1;
+
+      var html = '';
+      for (var i = 0; i < standardTunes.length; i++) {
+        var startDay = getTuneStartDay(i);
+        var endDay = (i < 12) ? startDay + 29 : startDay + 13;
+        var isCurrent = (i === curTuneIdx) ? 'is-current' : '';
+        html += '<button class="sheet-row-btn ' + isCurrent + '" onclick="jumpToDay(' + startDay + ')">' +
+                  '<span>' + standardTunes[i] + ' (Day ' + startDay + '~' + endDay + ')</span>' +
+                  '<span>➔</span>' +
+                '</button>';
       }
+      container.innerHTML = html;
+    }
 
+    /* 하단 탭 스위칭 */
+    function switchTab(type) {
+      if (type === 'routine') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (type === 'fretboard') {
+        openJumpSheet();
+      } else if (type === 'metro') {
+        document.getElementById('metroSheet').classList.add('open');
+      } else if (type === 'stats') {
+        renderStatsModal();
+        document.getElementById('statsSheet').classList.add('open');
+      } else if (type === 'settings') {
+        document.getElementById('settingsSheet').classList.add('open');
+      }
+    }
+
+    function renderStatsModal() {
+      var map = getCompletedMap();
+      var y1 = 0, y2 = 0, y3 = 0;
+      for (var k in map) {
+        var d = parseInt(k, 10);
+        if (d <= 365) y1++;
+        else if (d <= 730) y2++;
+        else if (d <= 1095) y3++;
+      }
+      document.getElementById('stY1').innerText = y1 + '/365';
+      document.getElementById('stY2').innerText = y2 + '/365';
+      document.getElementById('stY3').innerText = y3 + '/365';
+
+      var start = Math.max(1, currentDay - 15);
+      var end = Math.min(1095, start + 29);
+      var gHtml = '';
+      for (var i = start; i <= end; i++) {
+        var isDone = map[i] ? 'done' : '';
+        var isCur = (i === currentDay) ? 'current' : '';
+        gHtml += '<div class="grass-cell ' + isDone + ' ' + isCur + '"></div>';
+      }
+      document.getElementById('grassGrid').innerHTML = gHtml;
+    }
+
+    /* 메인 렌더 함수 */
+    function render(d) {
+      // 상단 D-Day 바
+      document.getElementById('curDayBadge').innerText = 'D-' + d;
+      document.getElementById('prev2DayTxt').innerText = d > 2 ? '[ D-' + (d-2) + ' ]' : '';
+      document.getElementById('prev1DayTxt').innerText = d > 1 ? '[ D-' + (d-1) + ' ]' : '';
+      document.getElementById('next1DayTxt').innerText = d < 1095 ? '[ D-' + (d+1) + ' ]' : '';
+
+      var isEn = (currentLang === 'en');
+      var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
       var activeIdx = (d - Math.floor(d / 7) - 1);
       var curKey = keys[activeIdx % 12];
       var rhythm = getTodayRhythm(d);
-      var yr = d <= 365 ? 1 : (d <= 730 ? 2 : 3);
-      var posTxt = yr === 1 ? ("CAGED Pos " + (((d - 1) % 5) + 1)) : ("Pos " + (((d - 1) % 7) + 1));
-      
-      var pattern = fallbackPatterns[(d - 1) % fallbackPatterns.length];
+      var posTxt = yr === 1 ? ("Pos " + (((d - 1) % 5) + 1) + " (CAGED)") : ("Pos " + (((d - 1) % 7) + 1) + " (3NPS)");
 
+      // 앰버 미션 카드 데이터 갱신
+      document.getElementById('missionHeading').innerText = "TODAY'S MISSION (Year " + yr + ")";
+      document.getElementById('mKeyTitle').innerText = curKey + " Major";
+      document.getElementById('mRhythmTitle').innerText = rhythm;
+      document.getElementById('mPosTitle').innerText = posTxt;
+      document.getElementById('mBpmTitle').innerText = "BPM " + bpm;
+
+      var map = getCompletedMap();
+      var doneCount = Object.keys(map).length;
+      var pct = ((doneCount / 1095) * 100).toFixed(1);
+      document.getElementById('mDoneCount').innerText = doneCount;
+      document.getElementById('mDonePct').innerText = pct + '%';
+      document.getElementById('mProgressBar').style.width = Math.max(1, pct) + '%';
+
+      // 완주 버튼 토글
+      var finishBtn = document.getElementById('finishBtn');
+      if (map[d]) {
+        finishBtn.classList.add('is-completed');
+        finishBtn.innerHTML = '<span>✓</span> <span>' + (isEn ? 'Completed (Click to Undo)' : '오늘 루틴 완주 완료됨 (취소)') + '</span>';
+      } else {
+        finishBtn.classList.remove('is-completed');
+        finishBtn.innerHTML = '<span>✓</span> <span>' + (isEn ? 'Complete Today 3-Hour Routine' : '오늘 3시간 루틴 완주하기') + '</span>';
+      }
+
+      // 곡 정보
       var tuneIdx = d <= 360 ? Math.floor((d - 1) / 30) : 12 + Math.floor((d - 361) / 14);
       if (tuneIdx >= standardTunes.length) tuneIdx = standardTunes.length - 1;
       var curTune = standardTunes[tuneIdx];
+      var pattern = fallbackPatterns[(d - 1) % fallbackPatterns.length];
 
-      document.getElementById('summaryKeyText').innerText = curKey + " Key (Yr " + yr + ")";
-      document.getElementById('summaryRhythmText').innerText = rhythm;
-
+      // 4단계 루틴 스텝 아코디언 빌드
       var steps = [
         {
-          name: "DAILY CORE", time: "45m",
+          num: "[1]", name: isEn ? "Daily Core (Stretch & Scale)" : "Daily Core (스트레칭 & 스케일)", time: "45m",
           tasks: [
-            "손과 어깨 릴랙스 스트레칭 (5m)",
-            "크로매틱 핑거링 독립성 (10m)",
-            curKey + " 스케일 [" + posTxt + "] (20m) └ " + rhythm,
-            d > 90 ? "스윙 컴핑 & 4비트 워킹베이스 (10m)" : "2&4박 피킹 정밀도 훈련 (10m)"
+            isEn ? "Hand & Shoulder Relaxation Stretching (5m)" : "손과 어깨 릴랙스 스트레칭 (5m)",
+            isEn ? "Finger Independence Chromatic 1-2-3-4 (10m)" : "크로매틱 핑거링 독립성 (10m)",
+            curKey + " Scale [" + posTxt + "] (20m) └ " + rhythm,
+            d > 90 ? "Swing Comping & Walking Bass (10m)" : "Metronome 2&4 Alternate Picking (10m)"
           ]
         },
         {
-          name: "HARMONY & VOICE LEADING", time: "45m",
+          num: "[2]", name: "Harmony & Voice Leading", time: "45m",
           tasks: [
-            d < 56 ? curKey + " 다이아토닉 3화음 & 135 아르페지오" :
-            (yr === 1 ? curKey + " 2-5-1 가이드톤 보이스리딩 (Drop 2 / Shell)" :
-            (yr === 2 ? curKey + " 6-2-5-1 사이클 보이스리딩" : curKey + " 8마디 복합 하모니"))
+            d < 56 ? curKey + " Diatonic Triads & Arpeggios" :
+            (yr === 1 ? curKey + " 2-5-1 Guide Tone Voice Leading (Drop 2/Shell)" :
+            curKey + " Harmonic Cycles & Substitutions")
           ]
         },
         {
-          name: "CHORD-MELODY (" + curTune + ")", time: "45m",
+          num: "[3]", name: "Chord-Melody (" + curTune + ")", time: "45m",
           tasks: [
-            d <= 60 ? "[" + curTune + "] (" + curKey + ") 멜로디 단음 연주" :
-            (yr === 1 ? "[" + curTune + "] (" + curKey + ") 멜로디 + 1-3-7 컴핑 & 워킹" :
-            "[" + curTune + "] (" + curKey + ") 2성부 보이싱 & 템포 푸시")
+            d <= 60 ? "[" + curTune + "] (" + curKey + ") Melody Execution" :
+            "[" + curTune + "] (" + curKey + ") 2-Voice Comping & Walking Bass"
           ]
         },
         {
-          name: "JAZZ LANGUAGE & PATTERNS", time: "45m",
+          num: "[4]", name: "Jazz Language & Cells", time: "45m",
           tasks: [
-            d <= 90 ? curKey + " 패턴 드릴 └ " + pattern + " (" + rhythm + ")" :
-            "★ 오늘의 마스터 셀 트레이닝"
+            d <= 90 ? curKey + " Pattern Training └ " + pattern + " (" + rhythm + ")" :
+            "★ Today's Target Language Cells"
           ]
         }
       ];
 
-      var html = '';
+      var accHtml = '';
       for (var i = 0; i < steps.length; i++) {
         var isOpen = (i === activeStepIdx) ? 'active' : '';
-        html += 
-          '<div class="routine-step-card ' + isOpen + '">' +
-            '<div class="step-header" onclick="toggleStep(' + i + ')">' +
-              '<div class="step-title-wrap">' +
-                '<span class="step-num">' + (i + 1) + '</span>' +
-                '<span class="step-name">' + steps[i].name + '</span>' +
+        accHtml += 
+          '<div class="step-card ' + isOpen + '">' +
+            '<div class="step-head" onclick="toggleStep(' + i + ')">' +
+              '<div class="step-head-left">' +
+                '<span class="step-head-num">' + steps[i].num + '</span> ' +
+                '<span>' + steps[i].name + '</span>' +
               '</div>' +
-              '<div style="display:flex; align-items:center;">' +
-                '<span class="step-time">' + steps[i].time + '</span>' +
-                '<span class="toggle-icon">▼</span>' +
+              '<div class="step-head-right">' +
+                '<span>' + steps[i].time + '</span>' +
+                '<span>' + (isOpen ? '▲' : '▼') + '</span>' +
               '</div>' +
             '</div>' +
             '<div class="step-body">';
         
         for (var j = 0; j < steps[i].tasks.length; j++) {
-          html += '<div class="task-item"><input type="checkbox"><div>' + steps[i].tasks[j] + '</div></div>';
+          accHtml += '<div class="task-row"><input type="checkbox"><div>' + steps[i].tasks[j] + '</div></div>';
         }
 
-        html += '<a href="' + PLAYLIST_URL + '" target="_blank" rel="noopener" class="video-hint-link">▶ 프로반 48강 해설 영상 보기</a>';
-        html += '</div></div>';
+        accHtml += '<a href="' + PLAYLIST_URL + '" target="_blank" rel="noopener" class="video-sub-link">▶ ' + (isEn ? "Watch JunKim Pro Guide Video" : "프로반 해설 강의 영상 시청") + '</a>';
+        accHtml += '</div></div>';
       }
 
-      document.getElementById('routineAccordion').innerHTML = html;
+      document.getElementById('accordionBox').innerHTML = accHtml;
     }
 
-    /* 메트로놈 로직 */
+    /* 메트로놈 사운드 엔진 */
     var actx = null, ticking = false, bpm = 85, nextTick = 0.0, timerId = null;
     function stepBpm(diff) {
-      bpm = Math.max(30, Math.min(400, bpm + diff));
-      document.getElementById('bpmTxt').innerText = bpm;
+      bpm = Math.max(30, Math.min(300, bpm + diff));
+      document.getElementById('bpmDisplay').innerText = bpm;
+      document.getElementById('mBpmTitle').innerText = "BPM " + bpm;
     }
     function playBeep(t) {
       var osc = actx.createOscillator();
@@ -703,21 +1043,21 @@
       }
       if (actx.state === 'suspended') actx.resume();
       ticking = !ticking;
-      var btn = document.getElementById('playBtn');
+      var btn = document.getElementById('metroPlayBtn');
       if (ticking) {
         btn.innerText = '■ STOP';
-        btn.classList.add('on');
+        btn.style.background = '#ef4444';
+        btn.style.color = '#fff';
         nextTick = actx.currentTime + 0.05;
         loopMetro();
       } else {
         btn.innerText = '▶ START';
-        btn.classList.remove('on');
+        btn.style.background = '#f59e0b';
+        btn.style.color = '#000';
         clearTimeout(timerId);
       }
     }
 
-    updateSponsorUI();
-    populateTuneSelect();
     render(currentDay);
   </script>
 </body>
